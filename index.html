@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -7,238 +6,222 @@
 
   <title>Fizmo3D — sklep z wydrukami 3D</title>
 
-  <!-- InPost Geowidget -->
-  <script src="https://geowidget.easypack24.net/js/sdk-for-javascript.js"></script>
+
+ const INPOST_GEOWIDGET_TOKEN =
+  "TU_WKLEJ_PUBLICZNY_TOKEN_GEOWIDGET";
+
+    rel="stylesheet"
+    href="https://geowidget.inpost.pl/inpost-geowidget.css"
+  >
+
+  <script
+    src="https://geowidget.inpost.pl/inpost-geowidget.js"
+    defer
+  ></script>
 
   <style>
+    /* =========================
+       RESET
+       ========================= */
+
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: #f4f5f7;
-      color: #222;
+      background: #f5f7fb;
+      color: #1d2433;
+      line-height: 1.5;
     }
 
     button,
-    input {
-      font-family: inherit;
+    input,
+    select {
+      font: inherit;
     }
 
     button {
-      border: 0;
-      border-radius: 9px;
-      padding: 11px 15px;
       cursor: pointer;
-      font-weight: bold;
-      transition: .15s;
     }
 
-    button:hover {
-      transform: translateY(-1px);
-    }
+    /* =========================
+       HEADER
+       ========================= */
 
     header {
+      background: #111827;
+      color: white;
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: #111;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #6366f1;
+    }
+
+    #cartButton {
+      border: none;
+      background: #6366f1;
       color: white;
-      padding: 16px 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
+      padding: 11px 17px;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: 0.2s;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 24px;
+    #cartButton:hover {
+      background: #4f46e5;
+      transform: translateY(-1px);
     }
 
-    .header-buttons {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .header-button {
-      background: white;
-      color: #111;
-    }
-
-    main {
-      width: 100%;
-      max-width: 1200px;
-      margin: auto;
-      padding: 25px;
-    }
+    /* =========================
+       HERO
+       ========================= */
 
     .hero {
-      background: white;
-      border-radius: 16px;
-      padding: 35px;
-      margin-bottom: 25px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,.06);
+      max-width: 1200px;
+      margin: 35px auto 25px;
+      padding: 50px 30px;
+      border-radius: 22px;
+      background: linear-gradient(
+        135deg,
+        #111827,
+        #312e81
+      );
+      color: white;
+      box-shadow: 0 12px 35px rgba(49, 46, 129, 0.22);
     }
 
-    .hero h2 {
-      margin-top: 0;
-      font-size: 30px;
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 12px;
     }
 
     .hero p {
-      color: #666;
+      font-size: 18px;
+      max-width: 700px;
+      color: #e5e7eb;
     }
 
-    .section-title {
-      margin-top: 30px;
+    /* =========================
+       PRODUCTS
+       ========================= */
+
+    .products-section {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
     }
 
-    .products {
+    .products-section h2 {
+      font-size: 30px;
+      margin-bottom: 22px;
+    }
+
+    #products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(230px, 1fr)
+      );
+      gap: 22px;
     }
 
-    .product {
+    .product-card {
       background: white;
-      border-radius: 15px;
-      padding: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.08);
-      overflow: hidden;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      transition: 0.2s;
     }
 
-    .product img {
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .product-image {
       width: 100%;
-      height: 220px;
+      height: 210px;
       object-fit: cover;
+      border-radius: 14px;
+      background: #e5e7eb;
+      margin-bottom: 15px;
+    }
+
+    .product-card h3 {
+      font-size: 21px;
+      margin-bottom: 7px;
+    }
+
+    .product-description {
+      color: #6b7280;
+      min-height: 45px;
+      margin-bottom: 12px;
+    }
+
+    .product-price {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 13px;
+    }
+
+    .add-button {
+      width: 100%;
+      border: none;
       border-radius: 10px;
-      background: #eee;
-      display: block;
-    }
-
-    .product h3 {
-      margin: 15px 0 8px;
-    }
-
-    .price {
-      font-size: 20px;
+      padding: 12px;
+      background: #6366f1;
+      color: white;
       font-weight: bold;
-      margin: 10px 0 15px;
+      transition: 0.2s;
     }
 
-    .product-buttons {
+    .add-button:hover {
+      background: #4f46e5;
+    }
+
+    /* =========================
+       CART
+       ========================= */
+
+    #cartSection {
+      display: none;
+      max-width: 1200px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
+
+    .cart-box {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .cart-box h2 {
+      margin-bottom: 20px;
+    }
+
+    #cartItems {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-    }
-
-    .primary {
-      background: #111;
-      color: white;
-    }
-
-    .secondary {
-      background: #ddd;
-      color: #111;
-    }
-
-    .danger {
-      background: #d62828;
-      color: white;
-    }
-
-    .edit {
-      background: #ffb703;
-      color: #111;
-    }
-
-    .success-button {
-      background: #198754;
-      color: white;
-    }
-
-    .admin {
-      display: none;
-      background: white;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.08);
-    }
-
-    .admin.active {
-      display: block;
-    }
-
-    .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .admin-status {
-      background: #d1e7dd;
-      border: 1px solid #a3cfbb;
-      padding: 10px 13px;
-      border-radius: 8px;
-      color: #155724;
-      font-weight: bold;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 12px;
-      margin: 6px 0 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-      outline: none;
-      background: white;
-    }
-
-    input:focus,
-    select:focus {
-      border-color: #111;
-    }
-
-    .admin-form {
-      max-width: 600px;
-    }
-
-    .cart {
-      display: none;
-      background: white;
-      border-radius: 15px;
-      padding: 20px;
-      margin-top: 25px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.08);
-    }
-
-    .cart.open {
-      display: block;
-    }
-
-    .cart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .cart-header h2 {
-      margin: 0;
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .cart-item {
@@ -246,12 +229,9 @@
       justify-content: space-between;
       align-items: center;
       gap: 15px;
-      padding: 15px 0;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .cart-item:last-child {
-      border-bottom: 0;
+      padding: 15px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
     }
 
     .cart-item-info {
@@ -260,240 +240,333 @@
 
     .cart-item-name {
       font-weight: bold;
-      font-size: 17px;
+      margin-bottom: 3px;
     }
 
     .cart-item-price {
-      color: #666;
-      margin-top: 4px;
+      color: #6b7280;
+      font-size: 14px;
     }
 
     .quantity-controls {
       display: flex;
       align-items: center;
       gap: 8px;
-      flex-wrap: wrap;
     }
 
-    .quantity-number {
-      min-width: 30px;
-      text-align: center;
+    .quantity-controls button {
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 8px;
+      background: #e5e7eb;
+      font-weight: bold;
+    }
+
+    .remove-button {
+      border: none;
+      background: #fee2e2;
+      color: #b91c1c;
+      padding: 8px 10px;
+      border-radius: 8px;
       font-weight: bold;
     }
 
     .cart-total {
-      border-top: 2px solid #111;
-      margin-top: 15px;
-      padding-top: 15px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 20px;
+      text-align: right;
+      font-size: 24px;
+      font-weight: 800;
+      margin-top: 20px;
+    }
+
+    /* =========================
+       CHECKOUT
+       ========================= */
+
+    .checkout-box {
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .checkout-box h2 {
+      margin-bottom: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
       font-weight: bold;
+      margin-bottom: 7px;
     }
 
-    .empty-cart {
-      padding: 25px 0;
-      text-align: center;
-      color: #777;
-    }
-
-    .checkout {
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      outline: none;
       background: white;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: repeat(
+        2,
+        minmax(0, 1fr)
+      );
+      gap: 15px;
+    }
+
+    /* =========================
+       DELIVERY
+       ========================= */
+
+    .delivery-options {
+      display: grid;
+      grid-template-columns: repeat(
+        2,
+        minmax(0, 1fr)
+      );
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .delivery-option {
+      border: 2px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .delivery-option:hover {
+      border-color: #a5b4fc;
+    }
+
+    .delivery-option.selected {
+      border-color: #6366f1;
+      background: #eef2ff;
+    }
+
+    .delivery-option label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .delivery-option input {
+      margin-top: 4px;
+    }
+
+    .delivery-title {
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .delivery-description {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    /* =========================
+       INPOST
+       ========================= */
+
+    #inpostFields {
+      display: none;
+      margin-top: 15px;
+      padding: 18px;
       border-radius: 15px;
-      padding: 25px;
-      margin-top: 25px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.06);
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
     }
 
-    .delivery-box,
-    .payment-box {
-      border: 1px solid #ddd;
+    #inpostFields h3 {
+      margin-bottom: 12px;
+    }
+
+    #showInpostMap {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 13px 15px;
+      background: #111827;
+      color: white;
+      font-weight: bold;
+      margin-bottom: 15px;
+      transition: 0.2s;
+    }
+
+    #showInpostMap:hover {
+      background: #1f2937;
+    }
+
+    #selectedLocker {
+      display: none;
+      background: #ecfdf5;
+      border: 1px solid #86efac;
+      color: #166534;
       border-radius: 12px;
-      padding: 15px;
-      margin: 12px 0;
+      padding: 13px;
+      margin-bottom: 15px;
     }
 
-    .delivery-option,
+    #inpostMapContainer {
+      display: none;
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      margin-top: 10px;
+    }
+
+    /*
+      Ważne:
+      Geowidget potrzebuje określonej wysokości.
+    */
+
+    inpost-geowidget {
+      display: block;
+      width: 100%;
+      height: 550px;
+    }
+
+    #inpostTokenWarning {
+      display: none;
+      padding: 14px;
+      background: #fff7ed;
+      border: 1px solid #fdba74;
+      color: #9a3412;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    /* =========================
+       COURIER
+       ========================= */
+
+    #courierFields {
+      display: none;
+      margin-top: 15px;
+      padding: 18px;
+      border-radius: 15px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+    }
+
+    /* =========================
+       PAYMENT
+       ========================= */
+
+    .payment-box {
+      margin-top: 20px;
+      padding: 18px;
+      background: #f8fafc;
+      border-radius: 15px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .payment-box h3 {
+      margin-bottom: 13px;
+    }
+
     .payment-option {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 13px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      margin: 8px 0;
-      cursor: pointer;
-      transition: .15s;
+      padding: 10px 0;
     }
 
-    .delivery-option:hover,
-    .payment-option:hover {
-      background: #f7f7f7;
-    }
+    /* =========================
+       CHECKOUT BUTTON
+       ========================= */
 
-    .delivery-option input,
-    .payment-option input {
-      width: auto;
-      margin: 0;
-    }
-
-    #parcelFields,
-    #courierFields {
-      display: none;
-      margin-top: 15px;
-    }
-
-    #parcelFields.active,
-    #courierFields.active {
-      display: block;
-    }
-
-    .inpost-title {
-      font-weight: bold;
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-
-    /* PRAWDZIWA MAPA INPOST */
-    .inpost-map {
+    #checkoutButton {
       width: 100%;
-      min-height: 500px;
-      border: 1px solid #ddd;
+      margin-top: 22px;
+      padding: 15px;
+      border: none;
       border-radius: 12px;
-      overflow: hidden;
-      margin-top: 12px;
-      background: #eee;
+      background: #16a34a;
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+      transition: 0.2s;
     }
 
-    .selected-parcel {
-      display: none;
-      background: #d1e7dd;
-      border: 1px solid #a3cfbb;
-      color: #155724;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 15px;
+    #checkoutButton:hover {
+      background: #15803d;
     }
 
-    .selected-parcel.active {
-      display: block;
+    #checkoutButton:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
-    .notice {
-      background: #fff3cd;
-      border: 1px solid #ffe69c;
-      padding: 12px;
-      border-radius: 8px;
-      margin: 10px 0;
-    }
+    /* =========================
+       EMPTY CART
+       ========================= */
 
-    .success {
-      background: #d1e7dd;
-      border: 1px solid #a3cfbb;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 15px;
-    }
-
-    .order-summary {
-      background: #f7f7f7;
-      border-radius: 10px;
-      padding: 15px;
-    }
-
-    .summary-line {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 6px 0;
-    }
-
-    .summary-total {
-      border-top: 1px solid #ccc;
-      margin-top: 10px;
-      padding-top: 12px;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.65);
-      z-index: 2000;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      background: white;
-      width: 100%;
-      max-width: 500px;
-      padding: 25px;
-      border-radius: 15px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal-buttons {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .modal-buttons button {
-      flex: 1;
-    }
-
-    .small {
-      font-size: 13px;
-      color: #666;
-    }
-
-    .no-products {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
+    .empty-cart {
       text-align: center;
-      color: #777;
+      padding: 30px 10px;
+      color: #6b7280;
     }
+
+    /* =========================
+       FOOTER
+       ========================= */
 
     footer {
+      margin-top: 50px;
+      padding: 30px 20px;
+      background: #111827;
+      color: #d1d5db;
       text-align: center;
-      padding: 35px;
-      color: #777;
     }
 
-    @media (max-width: 650px) {
+    /* =========================
+       RESPONSIVE
+       ========================= */
+
+    @media (max-width: 700px) {
+
       header {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .header-buttons {
-        width: 100%;
-      }
-
-      .header-buttons button {
-        flex: 1;
-      }
-
-      main {
         padding: 15px;
       }
 
-      .hero {
-        padding: 25px 15px;
+      .logo {
+        font-size: 20px;
       }
 
-      .hero h2 {
-        font-size: 24px;
+      .hero {
+        margin: 20px 12px;
+        padding: 35px 22px;
+      }
+
+      .hero h1 {
+        font-size: 31px;
+      }
+
+      .products-section {
+        padding: 0 12px;
+      }
+
+      .checkout-grid,
+      .delivery-options {
+        grid-template-columns: 1fr;
       }
 
       .cart-item {
@@ -502,16 +575,11 @@
       }
 
       .quantity-controls {
-        justify-content: flex-start;
+        justify-content: center;
       }
 
-      .cart-total {
-        flex-direction: column;
-        gap: 5px;
-      }
-
-      .inpost-map {
-        min-height: 450px;
+      inpost-geowidget {
+        height: 500px;
       }
     }
   </style>
@@ -519,2536 +587,1682 @@
 
 <body>
 
-<header>
-  <h1>Fizmo3D</h1>
+  <!-- =========================
+       HEADER
+       ========================= -->
 
-  <div class="header-buttons">
-    <button id="cartButton" class="header-button" type="button">
+  <header>
+    <div class="logo">
+      Fizmo<span>3D</span>
+    </div>
+
+    <button id="cartButton" type="button">
       🛒 Koszyk (<span id="cartCount">0</span>)
     </button>
+  </header>
 
-    <button id="ownerButton" class="header-button" type="button">
-      Panel właściciela
-    </button>
-  </div>
-</header>
 
-<main>
+  <!-- =========================
+       HERO
+       ========================= -->
 
   <section class="hero">
-    <h2>Fizmo3D — wydruki 3D</h2>
+    <h1>Wydruki 3D na wyciągnięcie ręki</h1>
+
     <p>
-      Wybierz produkt, dodaj go do koszyka
-      i przejdź do zamówienia.
+      Wybierz gotowy produkt, dodaj go do koszyka
+      i zamów wygodnie z dostawą InPost lub kurierem.
     </p>
   </section>
 
-  <section id="adminPanel" class="admin">
 
-    <div class="admin-header">
-      <div>
-        <h2>Panel właściciela</h2>
+  <!-- =========================
+       PRODUCTS
+       ========================= -->
 
-        <div class="admin-status">
-          ✓ Zalogowano jako właściciel
-        </div>
+  <section class="products-section">
+
+    <h2>Nasze produkty</h2>
+
+    <div id="products"></div>
+
+  </section>
+
+
+  <!-- =========================
+       CART
+       ========================= -->
+
+  <section id="cartSection">
+
+    <div class="cart-box">
+
+      <h2>Twój koszyk</h2>
+
+      <div id="cartItems"></div>
+
+      <div class="cart-total">
+        Razem:
+        <span id="cartTotal">0,00 zł</span>
       </div>
 
-      <button id="logoutButton" class="secondary" type="button">
-        Wyloguj
-      </button>
-    </div>
 
-    <hr>
+      <!-- =========================
+           CHECKOUT
+           ========================= -->
 
-    <h3>Dodaj produkt</h3>
+      <div class="checkout-box">
 
-    <div class="admin-form">
+        <h2>Dane zamówienia</h2>
 
-      <label>Nazwa produktu</label>
+        <div class="checkout-grid">
 
-      <input
-        id="newName"
-        type="text"
-        placeholder="Np. Figurka kota"
-      >
+          <div class="form-group">
+            <label for="customerName">
+              Imię i nazwisko
+            </label>
 
-      <label>Cena</label>
+            <input
+              type="text"
+              id="customerName"
+              placeholder="Jan Kowalski"
+              autocomplete="name"
+            >
+          </div>
 
-      <input
-        id="newPrice"
-        type="number"
-        min="0"
-        step="0.01"
-        placeholder="39.99"
-      >
 
-      <label>Link do zdjęcia</label>
+          <div class="form-group">
+            <label for="customerEmail">
+              E-mail
+            </label>
 
-      <input
-        id="newImage"
-        type="text"
-        placeholder="https://..."
-      >
+            <input
+              type="email"
+              id="customerEmail"
+              placeholder="jan@example.com"
+              autocomplete="email"
+            >
+          </div>
 
-      <button
-        id="addProductButton"
-        class="primary"
-        type="button"
-      >
-        + Dodaj produkt
-      </button>
-
-    </div>
-  </section>
-
-  <section>
-
-    <h2 class="section-title">
-      Produkty
-    </h2>
-
-    <div id="products" class="products"></div>
-
-  </section>
-
-  <section id="cartSection" class="cart">
-
-    <div class="cart-header">
-
-      <h2>🛒 Koszyk</h2>
-
-      <button
-        id="closeCartButton"
-        class="secondary"
-        type="button"
-      >
-        Zamknij
-      </button>
-
-    </div>
-
-    <div id="cart"></div>
-
-    <div class="cart-total">
-
-      <span>Razem:</span>
-
-      <span id="cartTotal">
-        0.00 zł
-      </span>
-
-    </div>
-
-  </section>
-
-  <section class="checkout">
-
-    <h2>Finalizacja zamówienia</h2>
-
-    <h3>Dane klienta</h3>
-
-    <input
-      id="customerName"
-      type="text"
-      placeholder="Imię i nazwisko"
-    >
-
-    <input
-      id="customerEmail"
-      type="email"
-      placeholder="Adres e-mail"
-    >
-
-    <input
-      id="customerPhone"
-      type="tel"
-      placeholder="Numer telefonu"
-    >
-
-    <h3>Dostawa</h3>
-
-    <div class="delivery-box">
-
-      <label class="delivery-option">
-
-        <input
-          type="radio"
-          name="delivery"
-          value="parcel"
-        >
-
-        <span>
-          <strong>
-            Dostawa InPost – Paczkomat®
-          </strong>
-
-          <br>
-
-          <span class="small">
-            Wybierz Paczkomat na mapie
-          </span>
-        </span>
-
-      </label>
-
-      <label class="delivery-option">
-
-        <input
-          type="radio"
-          name="delivery"
-          value="courier"
-        >
-
-        <span>
-          <strong>
-            Dostawa InPost – Kurier
-          </strong>
-
-          <br>
-
-          <span class="small">
-            Dostawa pod wskazany adres
-          </span>
-        </span>
-
-      </label>
-
-      <!-- PACZKOMAT -->
-
-      <div id="parcelFields">
-
-        <div class="inpost-title">
-          Wybierz Paczkomat®
         </div>
 
-        <div class="notice">
-          Wybierz Paczkomat bezpośrednio na mapie InPost.
-        </div>
 
-        <div class="inpost-map">
+        <!-- =========================
+             DELIVERY
+             ========================= -->
 
-          <inpost-geowidget
-            id="inpostGeoWidget"
-            token="TU_WKLEJ_TOKEN_INPOST"
-            language="pl"
-            config="parcelCollect"
-            onpointselected="onInPostPointSelected"
+        <h3 style="margin: 20px 0 12px;">
+          Dostawa
+        </h3>
+
+        <div class="delivery-options">
+
+          <div
+            class="delivery-option"
+            id="inpostDeliveryOption"
           >
-          </inpost-geowidget>
+
+            <label>
+
+              <input
+                type="radio"
+                name="delivery"
+                value="inpost"
+                id="deliveryInpost"
+              >
+
+              <div>
+
+                <div class="delivery-title">
+                  📦 InPost Paczkomat
+                </div>
+
+                <div class="delivery-description">
+                  Wybierz Paczkomat na mapie InPost.
+                </div>
+
+              </div>
+
+            </label>
+
+          </div>
+
+
+          <div
+            class="delivery-option"
+            id="courierDeliveryOption"
+          >
+
+            <label>
+
+              <input
+                type="radio"
+                name="delivery"
+                value="courier"
+                id="deliveryCourier"
+              >
+
+              <div>
+
+                <div class="delivery-title">
+                  🚚 Kurier
+                </div>
+
+                <div class="delivery-description">
+                  Dostawa pod wskazany adres.
+                </div>
+
+              </div>
+
+            </label>
+
+          </div>
 
         </div>
 
-        <div
-          id="selectedParcel"
-          class="selected-parcel"
-        >
+
+        <!-- =========================
+             INPOST FIELDS
+             ========================= -->
+
+        <div id="inpostFields">
+
+          <h3>
+            📦 Wybierz Paczkomat InPost
+          </h3>
+
+          <div id="inpostTokenWarning">
+            <strong>Mapa InPost nie jest jeszcze skonfigurowana.</strong>
+            <br><br>
+            W kodzie strony znajdź:
+            <br>
+            <code>TU_WKLEJ_PUBLICZNY_TOKEN_GEOWIDGET</code>
+            <br><br>
+            i zamień tę wartość na publiczny token Geowidget
+            wygenerowany w Managerze Paczkomatów InPost.
+          </div>
+
+
+          <button
+            type="button"
+            id="showInpostMap"
+          >
+            📍 Wybierz Paczkomat na mapie
+          </button>
+
+
+          <div id="selectedLocker"></div>
+
+
+          <div id="inpostMapContainer">
+            <!-- Geowidget zostanie tutaj dodany przez JavaScript -->
+          </div>
+
+
+          <!--
+            To pole jest wysyłane razem z formularzem.
+            Nie trzeba go ręcznie uzupełniać.
+          -->
+
+          <input
+            type="hidden"
+            id="parcelLocker"
+          >
+
+          <input
+            type="hidden"
+            id="parcelAddress"
+          >
+
         </div>
 
-        <label>
-          Kod Paczkomatu
-        </label>
 
-        <input
-          id="parcelCode"
-          type="text"
-          placeholder="Wybierz Paczkomat z mapy"
-          readonly
+        <!-- =========================
+             COURIER FIELDS
+             ========================= -->
+
+        <div id="courierFields">
+
+          <h3 style="margin-bottom: 15px;">
+            🚚 Adres dostawy
+          </h3>
+
+
+          <div class="checkout-grid">
+
+            <div class="form-group">
+
+              <label for="street">
+                Ulica
+              </label>
+
+              <input
+                type="text"
+                id="street"
+                placeholder="Przykładowa"
+                autocomplete="street-address"
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="house">
+                Numer domu / mieszkania
+              </label>
+
+              <input
+                type="text"
+                id="house"
+                placeholder="12/4"
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="postal">
+                Kod pocztowy
+              </label>
+
+              <input
+                type="text"
+                id="postal"
+                placeholder="00-001"
+                autocomplete="postal-code"
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="city">
+                Miasto
+              </label>
+
+              <input
+                type="text"
+                id="city"
+                placeholder="Warszawa"
+                autocomplete="address-level2"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =========================
+             PAYMENT
+             ========================= -->
+
+        <div class="payment-box">
+
+          <h3>
+            💳 Płatność
+          </h3>
+
+
+          <div class="payment-option">
+
+            <input
+              type="radio"
+              name="payment"
+              value="card"
+              id="paymentCard"
+              checked
+            >
+
+            <label for="paymentCard">
+              💳 Karta płatnicza
+            </label>
+
+          </div>
+
+
+          <div class="payment-option">
+
+            <input
+              type="radio"
+              name="payment"
+              value="blik"
+              id="paymentBlik"
+            >
+
+            <label for="paymentBlik">
+              📱 BLIK
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- =========================
+             CHECKOUT
+             ========================= -->
+
+        <button
+          id="checkoutButton"
+          type="button"
         >
-
-        <label>
-          Adres Paczkomatu
-        </label>
-
-        <input
-          id="parcelAddress"
-          type="text"
-          placeholder="Adres Paczkomatu"
-          readonly
-        >
-
-      </div>
-
-      <!-- KURIER -->
-
-      <div id="courierFields">
-
-        <h4>
-          Adres dostawy
-        </h4>
-
-        <input
-          id="street"
-          type="text"
-          placeholder="Ulica"
-        >
-
-        <input
-          id="houseNumber"
-          type="text"
-          placeholder="Numer domu / mieszkania"
-        >
-
-        <input
-          id="postalCode"
-          type="text"
-          placeholder="Kod pocztowy"
-        >
-
-        <input
-          id="city"
-          type="text"
-          placeholder="Miasto"
-        >
+          Przejdź do płatności
+        </button>
 
       </div>
 
     </div>
-
-    <h3>Płatność</h3>
-
-    <div class="payment-box">
-
-      <label class="payment-option">
-
-        <input
-          type="radio"
-          name="payment"
-          value="blik"
-        >
-
-        <span>
-
-          <strong>BLIK</strong>
-
-          <br>
-
-          <span class="small">
-            Bezpieczna płatność przez operatora
-          </span>
-
-        </span>
-
-      </label>
-
-      <label class="payment-option">
-
-        <input
-          type="radio"
-          name="payment"
-          value="card"
-        >
-
-        <span>
-
-          <strong>Karta płatnicza</strong>
-
-          <br>
-
-          <span class="small">
-            Visa / Mastercard i inne obsługiwane karty
-          </span>
-
-        </span>
-
-      </label>
-
-      <div
-        id="paymentInfo"
-        class="notice"
-      >
-        Wybierz metodę płatności.
-      </div>
-
-    </div>
-
-    <h3>Podsumowanie</h3>
-
-    <div
-      id="orderSummary"
-      class="order-summary"
-    ></div>
-
-    <button
-      id="paymentButton"
-      class="primary"
-      type="button"
-      style="width:100%; margin-top:15px;"
-    >
-      Przejdź do bezpiecznej płatności
-    </button>
-
-    <div id="paymentResult"></div>
 
   </section>
 
-</main>
 
-<footer>
-  Fizmo3D © 2026
-</footer>
+  <!-- =========================
+       FOOTER
+       ========================= -->
 
-<!-- MODAL EDYCJI -->
+  <footer>
 
-<div id="editModal" class="modal">
+    <p>
+      © 2026 Fizmo3D — sklep z wydrukami 3D
+    </p>
 
-  <div class="modal-content">
-
-    <h2>Edytuj produkt</h2>
-
-    <label>Nazwa produktu</label>
-
-    <input
-      id="editName"
-      type="text"
-      placeholder="Nazwa"
-    >
-
-    <label>Cena</label>
-
-    <input
-      id="editPrice"
-      type="number"
-      min="0"
-      step="0.01"
-      placeholder="Cena"
-    >
-
-    <label>Link do zdjęcia</label>
-
-    <input
-      id="editImage"
-      type="text"
-      placeholder="https://..."
-    >
-
-    <div class="modal-buttons">
-
-      <button
-        id="saveEditButton"
-        class="primary"
-        type="button"
-      >
-        Zapisz
-      </button>
-
-      <button
-        id="cancelEditButton"
-        class="secondary"
-        type="button"
-      >
-        Anuluj
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-<script>
-"use strict";
-
-/*
-==================================================
-USTAWIENIA
-==================================================
-*/
-
-const OWNER_PASSWORD = "Szym_123";
-
-const PLACEHOLDER_IMAGE =
-  "https://placehold.co/600x450?text=Fizmo3D";
+  </footer>
 
 
-/*
-==================================================
-LOCAL STORAGE
-==================================================
-*/
+  <!-- =========================
+       JAVASCRIPT
+       ========================= -->
 
-function loadJSON(key, fallback) {
+  <script>
 
-  try {
+    /* =====================================================
+       KONFIGURACJA INPOST
+       ===================================================== */
 
-    const value = localStorage.getItem(key);
+    /*
+      Wklej tutaj PUBLICZNY token Geowidget InPost.
 
-    if (!value) {
-      return fallback;
+      Przykład:
+
+      const INPOST_GEOWIDGET_TOKEN = "abc123...";
+
+      Nie wklejaj tutaj:
+      - klucza Stripe Secret
+      - hasła Gmail
+      - sekretu webhooka
+      - żadnych haseł
+    */
+
+    const INPOST_GEOWIDGET_TOKEN =
+      "TU_WKLEJ_PUBLICZNY_TOKEN_GEOWIDGET";
+
+
+    /* =====================================================
+       PRODUKTY
+       ===================================================== */
+
+    const products = [
+
+      {
+        id: "figurka-3d",
+        name: "Figurka 3D",
+        price: 39.99,
+        description: "Gotowa figurka wykonana w technologii druku 3D.",
+        image:
+          "https://via.placeholder.com/500x400.png?text=Figurka+3D"
+      },
+
+      {
+        id: "brelok-3d",
+        name: "Brelok 3D",
+        price: 14.99,
+        description: "Mały brelok 3D idealny na prezent.",
+        image:
+          "https://via.placeholder.com/500x400.png?text=Brelok+3D"
+      },
+
+      {
+        id: "organizer-3d",
+        name: "Organizer 3D",
+        price: 29.99,
+        description: "Praktyczny organizer wykonany na drukarce 3D.",
+        image:
+          "https://via.placeholder.com/500x400.png?text=Organizer+3D"
+      }
+
+    ];
+
+
+    /* =====================================================
+       KOSZYK
+       ===================================================== */
+
+    let cart = JSON.parse(
+      localStorage.getItem("fizmo3d_cart") || "[]"
+    );
+
+
+    /* =====================================================
+       ELEMENTY DOM
+       ===================================================== */
+
+    const productsContainer =
+      document.getElementById("products");
+
+    const cartSection =
+      document.getElementById("cartSection");
+
+    const cartItemsContainer =
+      document.getElementById("cartItems");
+
+    const cartCount =
+      document.getElementById("cartCount");
+
+    const cartTotal =
+      document.getElementById("cartTotal");
+
+    const cartButton =
+      document.getElementById("cartButton");
+
+    const checkoutButton =
+      document.getElementById("checkoutButton");
+
+    const deliveryInpost =
+      document.getElementById("deliveryInpost");
+
+    const deliveryCourier =
+      document.getElementById("deliveryCourier");
+
+    const inpostFields =
+      document.getElementById("inpostFields");
+
+    const courierFields =
+      document.getElementById("courierFields");
+
+    const inpostDeliveryOption =
+      document.getElementById("inpostDeliveryOption");
+
+    const courierDeliveryOption =
+      document.getElementById("courierDeliveryOption");
+
+    const showInpostMap =
+      document.getElementById("showInpostMap");
+
+    const inpostMapContainer =
+      document.getElementById("inpostMapContainer");
+
+    const selectedLocker =
+      document.getElementById("selectedLocker");
+
+    const parcelLocker =
+      document.getElementById("parcelLocker");
+
+    const parcelAddress =
+      document.getElementById("parcelAddress");
+
+    const inpostTokenWarning =
+      document.getElementById("inpostTokenWarning");
+
+
+    /* =====================================================
+       FORMATOWANIE CENY
+       ===================================================== */
+
+    function formatPrice(price) {
+
+      return price.toLocaleString(
+        "pl-PL",
+        {
+          style: "currency",
+          currency: "PLN"
+        }
+      );
+
     }
 
-    return JSON.parse(value);
 
-  } catch (error) {
+    /* =====================================================
+       ZAPIS KOSZYKA
+       ===================================================== */
 
-    console.warn(
-      "Nie udało się odczytać:",
-      key,
-      error
-    );
+    function saveCart() {
 
-    return fallback;
-  }
-}
+      localStorage.setItem(
+        "fizmo3d_cart",
+        JSON.stringify(cart)
+      );
 
-
-function saveJSON(key, value) {
-
-  try {
-
-    localStorage.setItem(
-      key,
-      JSON.stringify(value)
-    );
-
-    return true;
-
-  } catch (error) {
-
-    console.error(
-      "Nie udało się zapisać:",
-      key,
-      error
-    );
-
-    return false;
-  }
-}
+    }
 
 
-/*
-==================================================
-DOM
-==================================================
-*/
+    /* =====================================================
+       RENDER PRODUKTÓW
+       ===================================================== */
 
-const productsContainer =
-  document.getElementById("products");
+    function renderProducts() {
 
-const cartSection =
-  document.getElementById("cartSection");
+      productsContainer.innerHTML = "";
 
-const cartContainer =
-  document.getElementById("cart");
+      products.forEach(product => {
 
-const cartCount =
-  document.getElementById("cartCount");
+        const card =
+          document.createElement("div");
 
-const cartTotal =
-  document.getElementById("cartTotal");
+        card.className =
+          "product-card";
 
-const adminPanel =
-  document.getElementById("adminPanel");
+        card.innerHTML = `
 
-const editModal =
-  document.getElementById("editModal");
+          <img
+            class="product-image"
+            src="${product.image}"
+            alt="${product.name}"
+          >
 
+          <h3>
+            ${product.name}
+          </h3>
 
-/*
-==================================================
-PRODUKTY
-==================================================
-*/
+          <div class="product-description">
+            ${product.description}
+          </div>
 
-const defaultProducts = [
+          <div class="product-price">
+            ${formatPrice(product.price)}
+          </div>
 
-  {
-    id: 1,
-    name: "Figurka 3D",
-    price: 39.99,
-    image:
-      "https://placehold.co/600x450?text=Figurka+3D"
-  },
+          <button
+            class="add-button"
+            type="button"
+            onclick="addToCart('${product.id}')"
+          >
+            Dodaj do koszyka
+          </button>
 
-  {
-    id: 2,
-    name: "Brelok 3D",
-    price: 14.99,
-    image:
-      "https://placehold.co/600x450?text=Brelok+3D"
-  },
+        `;
 
-  {
-    id: 3,
-    name: "Organizer 3D",
-    price: 29.99,
-    image:
-      "https://placehold.co/600x450?text=Organizer+3D"
-  }
+        productsContainer.appendChild(card);
 
-];
-
-
-let products =
-  loadJSON(
-    "fizmo3d_products",
-    defaultProducts
-  );
-
-
-if (!Array.isArray(products)) {
-  products = defaultProducts;
-}
-
-
-let cart =
-  loadJSON(
-    "fizmo3d_cart",
-    []
-  );
-
-
-if (!Array.isArray(cart)) {
-  cart = [];
-}
-
-
-let editingId = null;
-
-
-/*
-==================================================
-START
-==================================================
-*/
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-    cleanCart();
-
-    renderProducts();
-    renderCart();
-    updateCheckoutSummary();
-    updateOwnerPanel();
-
-  }
-);
-
-
-/*
-==================================================
-WŁAŚCICIEL
-==================================================
-*/
-
-function isOwner() {
-
-  return (
-    sessionStorage.getItem(
-      "fizmo3d_owner"
-    ) === "true"
-  );
-
-}
-
-
-function updateOwnerPanel() {
-
-  if (isOwner()) {
-
-    adminPanel.classList.add(
-      "active"
-    );
-
-  } else {
-
-    adminPanel.classList.remove(
-      "active"
-    );
-
-  }
-
-}
-
-
-function ownerLogin() {
-
-  if (isOwner()) {
-
-    adminPanel.classList.toggle(
-      "active"
-    );
-
-    if (
-      adminPanel.classList.contains(
-        "active"
-      )
-    ) {
-
-      adminPanel.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
       });
 
     }
 
-    return;
-  }
 
+    /* =====================================================
+       DODAWANIE DO KOSZYKA
+       ===================================================== */
 
-  const password =
-    prompt(
-      "Podaj kod właściciela:"
-    );
-
-
-  if (password === null) {
-    return;
-  }
-
-
-  if (password === OWNER_PASSWORD) {
-
-    sessionStorage.setItem(
-      "fizmo3d_owner",
-      "true"
-    );
-
-    updateOwnerPanel();
-
-    renderProducts();
-
-    alert(
-      "Zalogowano jako właściciel."
-    );
-
-    adminPanel.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-
-  } else {
-
-    alert(
-      "Nieprawidłowy kod."
-    );
-
-  }
-
-}
-
-
-function logoutOwner() {
-
-  sessionStorage.removeItem(
-    "fizmo3d_owner"
-  );
-
-  updateOwnerPanel();
-  renderProducts();
-
-}
-
-
-/*
-==================================================
-PRODUKTY
-==================================================
-*/
-
-function saveProducts() {
-
-  saveJSON(
-    "fizmo3d_products",
-    products
-  );
-
-}
-
-
-function renderProducts() {
-
-  productsContainer.innerHTML = "";
-
-
-  if (products.length === 0) {
-
-    productsContainer.innerHTML = `
-      <div class="no-products">
-        Brak produktów w sklepie.
-      </div>
-    `;
-
-    return;
-  }
-
-
-  products.forEach(
-    function(product) {
-
-      const card =
-        document.createElement("article");
-
-      card.className =
-        "product";
-
-
-      const image =
-        document.createElement("img");
-
-      image.src =
-        product.image || PLACEHOLDER_IMAGE;
-
-      image.alt =
-        product.name;
-
-      image.onerror =
-        function() {
-
-          this.onerror = null;
-
-          this.src =
-            PLACEHOLDER_IMAGE;
-
-        };
-
-
-      const title =
-        document.createElement("h3");
-
-      title.textContent =
-        product.name;
-
-
-      const price =
-        document.createElement("div");
-
-      price.className =
-        "price";
-
-      price.textContent =
-        formatPrice(product.price);
-
-
-      const buttons =
-        document.createElement("div");
-
-      buttons.className =
-        "product-buttons";
-
-
-      const addButton =
-        document.createElement("button");
-
-      addButton.type =
-        "button";
-
-      addButton.className =
-        "primary";
-
-      addButton.textContent =
-        "Dodaj do koszyka";
-
-      addButton.addEventListener(
-        "click",
-        function() {
-
-          addToCart(
-            product.id
-          );
-
-        }
-      );
-
-
-      buttons.appendChild(
-        addButton
-      );
-
-
-      if (isOwner()) {
-
-        const editButton =
-          document.createElement("button");
-
-        editButton.type =
-          "button";
-
-        editButton.className =
-          "edit";
-
-        editButton.textContent =
-          "Edytuj";
-
-        editButton.addEventListener(
-          "click",
-          function() {
-
-            openEdit(
-              product.id
-            );
-
-          }
-        );
-
-
-        const deleteButton =
-          document.createElement("button");
-
-        deleteButton.type =
-          "button";
-
-        deleteButton.className =
-          "danger";
-
-        deleteButton.textContent =
-          "Usuń";
-
-        deleteButton.addEventListener(
-          "click",
-          function() {
-
-            deleteProduct(
-              product.id
-            );
-
-          }
-        );
-
-
-        buttons.appendChild(
-          editButton
-        );
-
-        buttons.appendChild(
-          deleteButton
-        );
-
-      }
-
-
-      card.appendChild(image);
-      card.appendChild(title);
-      card.appendChild(price);
-      card.appendChild(buttons);
-
-      productsContainer.appendChild(card);
-
-    }
-  );
-
-}
-
-
-/*
-==================================================
-DODAWANIE PRODUKTU
-==================================================
-*/
-
-function addProduct() {
-
-  if (!isOwner()) {
-
-    alert(
-      "Najpierw zaloguj się jako właściciel."
-    );
-
-    return;
-  }
-
-
-  const name =
-    document
-      .getElementById("newName")
-      .value
-      .trim();
-
-
-  const price =
-    Number(
-      document
-        .getElementById("newPrice")
-        .value
-    );
-
-
-  const image =
-    document
-      .getElementById("newImage")
-      .value
-      .trim();
-
-
-  if (!name) {
-
-    alert(
-      "Wpisz nazwę produktu."
-    );
-
-    return;
-  }
-
-
-  if (
-    !Number.isFinite(price) ||
-    price < 0
-  ) {
-
-    alert(
-      "Wpisz poprawną cenę."
-    );
-
-    return;
-  }
-
-
-  products.push({
-
-    id:
-      Date.now() +
-      Math.floor(
-        Math.random() * 1000
-      ),
-
-    name:
-      name,
-
-    price:
-      Number(
-        price.toFixed(2)
-      ),
-
-    image:
-      image ||
-      PLACEHOLDER_IMAGE
-
-  });
-
-
-  saveProducts();
-
-
-  document.getElementById("newName").value = "";
-  document.getElementById("newPrice").value = "";
-  document.getElementById("newImage").value = "";
-
-
-  renderProducts();
-
-
-  alert(
-    "Produkt został dodany."
-  );
-
-}
-
-
-/*
-==================================================
-USUWANIE
-==================================================
-*/
-
-function deleteProduct(id) {
-
-  if (!isOwner()) {
-    return;
-  }
-
-
-  const product =
-    products.find(
-      function(item) {
-        return item.id === id;
-      }
-    );
-
-
-  if (!product) {
-    return;
-  }
-
-
-  if (
-    !confirm(
-      'Czy na pewno usunąć produkt "' +
-      product.name +
-      '"?'
-    )
-  ) {
-
-    return;
-  }
-
-
-  products =
-    products.filter(
-      function(item) {
-        return item.id !== id;
-      }
-    );
-
-
-  cart =
-    cart.filter(
-      function(item) {
-        return item.id !== id;
-      }
-    );
-
-
-  saveProducts();
-  saveCart();
-
-  renderProducts();
-  renderCart();
-  updateCheckoutSummary();
-
-}
-
-
-/*
-==================================================
-EDYCJA
-==================================================
-*/
-
-function openEdit(id) {
-
-  if (!isOwner()) {
-    return;
-  }
-
-
-  const product =
-    products.find(
-      function(item) {
-        return item.id === id;
-      }
-    );
-
-
-  if (!product) {
-    return;
-  }
-
-
-  editingId = id;
-
-
-  document.getElementById("editName").value =
-    product.name;
-
-  document.getElementById("editPrice").value =
-    product.price;
-
-  document.getElementById("editImage").value =
-    product.image || "";
-
-
-  editModal.classList.add(
-    "active"
-  );
-
-}
-
-
-function closeEdit() {
-
-  editingId = null;
-
-  editModal.classList.remove(
-    "active"
-  );
-
-}
-
-
-function saveEdit() {
-
-  if (!isOwner() || editingId === null) {
-    return;
-  }
-
-
-  const product =
-    products.find(
-      function(item) {
-        return item.id === editingId;
-      }
-    );
-
-
-  if (!product) {
-
-    closeEdit();
-
-    return;
-  }
-
-
-  const name =
-    document
-      .getElementById("editName")
-      .value
-      .trim();
-
-
-  const price =
-    Number(
-      document
-        .getElementById("editPrice")
-        .value
-    );
-
-
-  const image =
-    document
-      .getElementById("editImage")
-      .value
-      .trim();
-
-
-  if (!name) {
-
-    alert(
-      "Wpisz nazwę produktu."
-    );
-
-    return;
-  }
-
-
-  if (
-    !Number.isFinite(price) ||
-    price < 0
-  ) {
-
-    alert(
-      "Wpisz poprawną cenę."
-    );
-
-    return;
-  }
-
-
-  product.name = name;
-
-  product.price =
-    Number(
-      price.toFixed(2)
-    );
-
-  product.image =
-    image ||
-    PLACEHOLDER_IMAGE;
-
-
-  saveProducts();
-  renderProducts();
-  closeEdit();
-
-}
-
-
-/*
-==================================================
-KOSZYK
-==================================================
-*/
-
-function saveCart() {
-
-  saveJSON(
-    "fizmo3d_cart",
-    cart
-  );
-
-}
-
-
-function cleanCart() {
-
-  cart =
-    cart.filter(
-      function(item) {
-
-        return (
-          item &&
-          products.some(
-            function(product) {
-              return product.id === item.id;
-            }
-          )
-        );
-
-      }
-    );
-
-
-  saveCart();
-
-}
-
-
-function addToCart(id) {
-
-  const product =
-    products.find(
-      function(item) {
-        return item.id === id;
-      }
-    );
-
-
-  if (!product) {
-
-    alert(
-      "Nie znaleziono produktu."
-    );
-
-    return;
-  }
-
-
-  const existing =
-    cart.find(
-      function(item) {
-        return item.id === id;
-      }
-    );
-
-
-  if (existing) {
-
-    existing.qty =
-      Number(existing.qty || 0) + 1;
-
-  } else {
-
-    cart.push({
-      id: id,
-      qty: 1
-    });
-
-  }
-
-
-  saveCart();
-
-  renderCart();
-  updateCheckoutSummary();
-
-}
-
-
-function removeFromCart(id) {
-
-  cart =
-    cart.filter(
-      function(item) {
-        return item.id !== id;
-      }
-    );
-
-
-  saveCart();
-
-  renderCart();
-  updateCheckoutSummary();
-
-}
-
-
-function changeQty(id, amount) {
-
-  const item =
-    cart.find(
-      function(cartItem) {
-        return cartItem.id === id;
-      }
-    );
-
-
-  if (!item) {
-    return;
-  }
-
-
-  item.qty =
-    Number(item.qty || 0) +
-    amount;
-
-
-  if (item.qty <= 0) {
-
-    removeFromCart(id);
-
-    return;
-  }
-
-
-  saveCart();
-
-  renderCart();
-  updateCheckoutSummary();
-
-}
-
-
-function getCartTotal() {
-
-  return cart.reduce(
-    function(total, item) {
+    function addToCart(productId) {
 
       const product =
         products.find(
-          function(productItem) {
-            return productItem.id === item.id;
-          }
+          item => item.id === productId
         );
-
-
-      if (!product) {
-        return total;
-      }
-
-
-      return (
-        total +
-        Number(product.price) *
-        Number(item.qty)
-      );
-
-    },
-    0
-  );
-
-}
-
-
-function getCartCount() {
-
-  return cart.reduce(
-    function(total, item) {
-
-      return (
-        total +
-        Number(item.qty || 0)
-      );
-
-    },
-    0
-  );
-
-}
-
-
-/*
-==================================================
-RENDER KOSZYKA
-==================================================
-*/
-
-function renderCart() {
-
-  cartContainer.innerHTML = "";
-
-  const count =
-    getCartCount();
-
-  cartCount.textContent =
-    count;
-
-
-  if (cart.length === 0) {
-
-    cartContainer.innerHTML = `
-      <div class="empty-cart">
-        Koszyk jest pusty.
-      </div>
-    `;
-
-    cartTotal.textContent =
-      "0.00 zł";
-
-    return;
-  }
-
-
-  cart.forEach(
-    function(item) {
-
-      const product =
-        products.find(
-          function(productItem) {
-            return productItem.id === item.id;
-          }
-        );
-
 
       if (!product) {
         return;
       }
 
 
-      const row =
-        document.createElement("div");
-
-      row.className =
-        "cart-item";
-
-
-      const info =
-        document.createElement("div");
-
-      info.className =
-        "cart-item-info";
+      const existing =
+        cart.find(
+          item => item.id === productId
+        );
 
 
-      const name =
-        document.createElement("div");
+      if (existing) {
 
-      name.className =
-        "cart-item-name";
+        existing.quantity += 1;
 
-      name.textContent =
-        product.name;
+      } else {
 
+        cart.push({
+          id: product.id,
+          quantity: 1
+        });
 
-      const price =
-        document.createElement("div");
-
-      price.className =
-        "cart-item-price";
-
-      price.textContent =
-        formatPrice(product.price) +
-        " / szt.";
+      }
 
 
-      info.appendChild(name);
-      info.appendChild(price);
+      saveCart();
 
+      renderCart();
 
-      const controls =
-        document.createElement("div");
+      cartSection.style.display = "block";
 
-      controls.className =
-        "quantity-controls";
-
-
-      const minus =
-        document.createElement("button");
-
-      minus.type =
-        "button";
-
-      minus.className =
-        "secondary";
-
-      minus.textContent =
-        "−";
-
-      minus.onclick =
-        function() {
-          changeQty(item.id, -1);
-        };
-
-
-      const quantity =
-        document.createElement("span");
-
-      quantity.className =
-        "quantity-number";
-
-      quantity.textContent =
-        item.qty;
-
-
-      const plus =
-        document.createElement("button");
-
-      plus.type =
-        "button";
-
-      plus.className =
-        "secondary";
-
-      plus.textContent =
-        "+";
-
-      plus.onclick =
-        function() {
-          changeQty(item.id, 1);
-        };
-
-
-      const remove =
-        document.createElement("button");
-
-      remove.type =
-        "button";
-
-      remove.className =
-        "danger";
-
-      remove.textContent =
-        "Usuń";
-
-      remove.onclick =
-        function() {
-          removeFromCart(item.id);
-        };
-
-
-      controls.appendChild(minus);
-      controls.appendChild(quantity);
-      controls.appendChild(plus);
-      controls.appendChild(remove);
-
-
-      row.appendChild(info);
-      row.appendChild(controls);
-
-
-      cartContainer.appendChild(row);
+      cartSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
 
     }
-  );
 
 
-  cartTotal.textContent =
-    formatPrice(
-      getCartTotal()
-    );
+    /* =====================================================
+       ZMIANA ILOŚCI
+       ===================================================== */
 
-}
+    function changeQuantity(
+      productId,
+      amount
+    ) {
 
+      const item =
+        cart.find(
+          product => product.id === productId
+        );
 
-/*
-==================================================
-KOSZYK — OTWIERANIE
-==================================================
-*/
-
-function openCart() {
-
-  cartSection.classList.add(
-    "open"
-  );
-
-  cartSection.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-
-}
+      if (!item) {
+        return;
+      }
 
 
-function closeCart() {
-
-  cartSection.classList.remove(
-    "open"
-  );
-
-}
+      item.quantity += amount;
 
 
-/*
-==================================================
-DOSTAWA
-==================================================
-*/
+      if (item.quantity <= 0) {
 
-function changeDelivery() {
+        cart =
+          cart.filter(
+            product => product.id !== productId
+          );
 
-  const selected =
-    document.querySelector(
-      'input[name="delivery"]:checked'
-    );
+      }
 
 
-  const parcelFields =
-    document.getElementById(
-      "parcelFields"
-    );
+      saveCart();
 
-
-  const courierFields =
-    document.getElementById(
-      "courierFields"
-    );
-
-
-  parcelFields.classList.remove(
-    "active"
-  );
-
-  courierFields.classList.remove(
-    "active"
-  );
-
-
-  if (!selected) {
-
-    updateCheckoutSummary();
-
-    return;
-  }
-
-
-  if (selected.value === "parcel") {
-
-    parcelFields.classList.add(
-      "active"
-    );
-
-  }
-
-
-  if (selected.value === "courier") {
-
-    courierFields.classList.add(
-      "active"
-    );
-
-  }
-
-
-  updateCheckoutSummary();
-
-}
-
-
-/*
-==================================================
-INPOST GEOWIDGET
-==================================================
-*/
-
-function onInPostPointSelected(point) {
-
-  console.log(
-    "Wybrany Paczkomat:",
-    point
-  );
-
-
-  if (!point) {
-    return;
-  }
-
-
-  const codeInput =
-    document.getElementById(
-      "parcelCode"
-    );
-
-
-  const addressInput =
-    document.getElementById(
-      "parcelAddress"
-    );
-
-
-  const selectedParcel =
-    document.getElementById(
-      "selectedParcel"
-    );
-
-
-  const code =
-    point.name ||
-    point.code ||
-    point.id ||
-    "";
-
-
-  let address = "";
-
-
-  if (point.address) {
-
-    if (typeof point.address === "string") {
-
-      address =
-        point.address;
-
-    } else {
-
-      address =
-        [
-          point.address.line1,
-          point.address.line2,
-          point.address.street,
-          point.address.city
-        ]
-        .filter(Boolean)
-        .join(", ");
+      renderCart();
 
     }
 
-  }
 
+    /* =====================================================
+       USUWANIE PRODUKTU
+       ===================================================== */
 
-  codeInput.value =
-    code;
+    function removeFromCart(productId) {
 
+      cart =
+        cart.filter(
+          item => item.id !== productId
+        );
 
-  addressInput.value =
-    address;
+      saveCart();
 
+      renderCart();
 
-  selectedParcel.innerHTML = `
-    <strong>✓ Wybrano Paczkomat</strong>
-    <br><br>
-    Kod:
-    <strong>${escapeHtml(code)}</strong>
-    ${address
-      ? `<br>Adres: ${escapeHtml(address)}`
-      : ""
     }
-  `;
 
 
-  selectedParcel.classList.add(
-    "active"
-  );
+    /* =====================================================
+       RENDER KOSZYKA
+       ===================================================== */
+
+    function renderCart() {
+
+      cartItemsContainer.innerHTML = "";
 
 
-  updateCheckoutSummary();
+      if (cart.length === 0) {
 
-}
+        cartItemsContainer.innerHTML = `
+          <div class="empty-cart">
+            Koszyk jest pusty.
+          </div>
+        `;
 
+        cartCount.textContent = "0";
 
-/*
-==================================================
-PŁATNOŚĆ
-==================================================
-*/
+        cartTotal.textContent =
+          formatPrice(0);
 
-function changePayment() {
+        return;
 
-  const selected =
-    document.querySelector(
-      'input[name="payment"]:checked'
-    );
-
-
-  const info =
-    document.getElementById(
-      "paymentInfo"
-    );
+      }
 
 
-  if (!selected) {
+      let total = 0;
 
-    info.textContent =
-      "Wybierz metodę płatności.";
-
-    updateCheckoutSummary();
-
-    return;
-  }
+      let count = 0;
 
 
-  if (selected.value === "blik") {
-
-    info.innerHTML = `
-      <strong>BLIK</strong>
-      <br>
-      Płatność BLIK powinna odbywać się
-      przez bezpiecznego operatora płatności.
-    `;
-
-  }
-
-
-  if (selected.value === "card") {
-
-    info.innerHTML = `
-      <strong>Karta płatnicza</strong>
-      <br>
-      Dane karty powinny być wpisywane
-      wyłącznie na bezpiecznej stronie
-      operatora płatności.
-    `;
-
-  }
-
-
-  updateCheckoutSummary();
-
-}
-
-
-/*
-==================================================
-PODSUMOWANIE
-==================================================
-*/
-
-function updateCheckoutSummary() {
-
-  const summary =
-    document.getElementById(
-      "orderSummary"
-    );
-
-
-  if (!summary) {
-    return;
-  }
-
-
-  let html = "";
-
-
-  if (cart.length === 0) {
-
-    html += `
-      <p>
-        Koszyk jest pusty.
-      </p>
-    `;
-
-  } else {
-
-    cart.forEach(
-      function(item) {
+      cart.forEach(item => {
 
         const product =
           products.find(
-            function(productItem) {
-              return productItem.id === item.id;
-            }
+            p => p.id === item.id
           );
-
 
         if (!product) {
           return;
         }
 
 
-        const lineTotal =
-          Number(product.price) *
-          Number(item.qty);
+        const itemTotal =
+          product.price * item.quantity;
 
 
-        html += `
-          <div class="summary-line">
-            <span>
-              ${escapeHtml(product.name)}
-              × ${item.qty}
-            </span>
+        total += itemTotal;
+
+        count += item.quantity;
+
+
+        const row =
+          document.createElement("div");
+
+        row.className =
+          "cart-item";
+
+
+        row.innerHTML = `
+
+          <div class="cart-item-info">
+
+            <div class="cart-item-name">
+              ${product.name}
+            </div>
+
+            <div class="cart-item-price">
+              ${formatPrice(product.price)}
+              / szt.
+            </div>
+
+          </div>
+
+
+          <div class="quantity-controls">
+
+            <button
+              type="button"
+              onclick="changeQuantity(
+                '${product.id}',
+                -1
+              )"
+            >
+              −
+            </button>
 
             <strong>
-              ${formatPrice(lineTotal)}
+              ${item.quantity}
             </strong>
+
+            <button
+              type="button"
+              onclick="changeQuantity(
+                '${product.id}',
+                1
+              )"
+            >
+              +
+            </button>
+
           </div>
+
+
+          <strong>
+            ${formatPrice(itemTotal)}
+          </strong>
+
+
+          <button
+            class="remove-button"
+            type="button"
+            onclick="removeFromCart(
+              '${product.id}'
+            )"
+          >
+            Usuń
+          </button>
+
         `;
+
+
+        cartItemsContainer.appendChild(row);
+
+      });
+
+
+      cartCount.textContent =
+        count.toString();
+
+      cartTotal.textContent =
+        formatPrice(total);
+
+    }
+
+
+    /* =====================================================
+       OTWIERANIE KOSZYKA
+       ===================================================== */
+
+    cartButton.addEventListener(
+      "click",
+      () => {
+
+        cartSection.style.display = "block";
+
+        cartSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
 
       }
     );
 
-  }
+
+    /* =====================================================
+       DOSTAWA
+       ===================================================== */
+
+    function updateDeliveryUI() {
+
+      const delivery =
+        document.querySelector(
+          'input[name="delivery"]:checked'
+        );
 
 
-  const delivery =
-    document.querySelector(
-      'input[name="delivery"]:checked'
+      if (!delivery) {
+
+        inpostFields.style.display = "none";
+
+        courierFields.style.display = "none";
+
+        inpostDeliveryOption
+          .classList.remove("selected");
+
+        courierDeliveryOption
+          .classList.remove("selected");
+
+        return;
+
+      }
+
+
+      if (delivery.value === "inpost") {
+
+        inpostFields.style.display = "block";
+
+        courierFields.style.display = "none";
+
+
+        inpostDeliveryOption
+          .classList.add("selected");
+
+        courierDeliveryOption
+          .classList.remove("selected");
+
+
+        if (
+          INPOST_GEOWIDGET_TOKEN ===
+          "TU_WKLEJ_PUBLICZNY_TOKEN_GEOWIDGET"
+        ) {
+
+          inpostTokenWarning.style.display =
+            "block";
+
+        } else {
+
+          inpostTokenWarning.style.display =
+            "none";
+
+        }
+
+      }
+
+
+      if (delivery.value === "courier") {
+
+        inpostFields.style.display = "none";
+
+        courierFields.style.display = "block";
+
+
+        inpostDeliveryOption
+          .classList.remove("selected");
+
+        courierDeliveryOption
+          .classList.add("selected");
+
+      }
+
+    }
+
+
+    deliveryInpost.addEventListener(
+      "change",
+      updateDeliveryUI
     );
 
 
-  const payment =
-    document.querySelector(
-      'input[name="payment"]:checked'
+    deliveryCourier.addEventListener(
+      "change",
+      updateDeliveryUI
     );
 
 
-  let deliveryText =
-    "Nie wybrano";
+    /* =====================================================
+       INPOST — CALLBACK
+       ===================================================== */
+
+    /*
+      Geowidget InPost wywoła tę funkcję
+      po wybraniu konkretnego Paczkomatu.
+    */
+
+    window.afterPointSelected =
+      function(point) {
+
+        console.log(
+          "Wybrany punkt InPost:",
+          point
+        );
 
 
-  if (delivery) {
-
-    deliveryText =
-      delivery.value === "parcel"
-        ? "InPost – Paczkomat®"
-        : "InPost – Kurier";
-
-  }
+        if (!point) {
+          return;
+        }
 
 
-  let paymentText =
-    "Nie wybrano";
+        const name =
+          point.name || "";
 
 
-  if (payment) {
+        /*
+          Różne wersje danych punktu mogą
+          zwracać adres w różnych polach.
+        */
 
-    paymentText =
-      payment.value === "blik"
-        ? "BLIK"
-        : "Karta płatnicza";
+        let address = "";
 
-  }
+        let city = "";
 
-
-  html += `
-    <hr>
-
-    <div class="summary-line">
-      <span>Dostawa</span>
-      <strong>
-        ${deliveryText}
-      </strong>
-    </div>
-
-    <div class="summary-line">
-      <span>Płatność</span>
-      <strong>
-        ${paymentText}
-      </strong>
-    </div>
-
-    <div class="summary-total">
-      Do zapłaty:
-      ${formatPrice(getCartTotal())}
-    </div>
-  `;
+        let postCode = "";
 
 
-  summary.innerHTML =
-    html;
+        if (point.address) {
 
-}
+          if (
+            typeof point.address === "string"
+          ) {
 
+            address =
+              point.address;
 
-/*
-==================================================
-ZAMÓWIENIE
-==================================================
-*/
+          } else {
 
-function startPayment() {
+            address =
+              point.address.line1 ||
+              point.address.line2 ||
+              "";
 
-  if (cart.length === 0) {
+          }
 
-    alert(
-      "Koszyk jest pusty."
-    );
-
-    openCart();
-
-    return;
-  }
+        }
 
 
-  const name =
-    document
-      .getElementById("customerName")
-      .value
-      .trim();
+        if (point.addressDetails) {
+
+          city =
+            point.addressDetails.city ||
+            "";
+
+          postCode =
+            point.addressDetails.post_code ||
+            point.addressDetails.postCode ||
+            "";
+
+        }
 
 
-  const email =
-    document
-      .getElementById("customerEmail")
-      .value
-      .trim();
+        /*
+          Zapisujemy podstawowe informacje
+          w hidden inputach.
+        */
+
+        parcelLocker.value =
+          name;
 
 
-  const phone =
-    document
-      .getElementById("customerPhone")
-      .value
-      .trim();
+        parcelAddress.value =
+          [
+            address,
+            postCode,
+            city
+          ]
+          .filter(Boolean)
+          .join(", ");
 
 
-  if (
-    !name ||
-    !email ||
-    !phone
-  ) {
+        /*
+          Pokazujemy użytkownikowi wybrany
+          Paczkomat.
+        */
 
-    alert(
-      "Uzupełnij imię i nazwisko, e-mail oraz telefon."
-    );
-
-    return;
-  }
+        selectedLocker.style.display =
+          "block";
 
 
-  const delivery =
-    document.querySelector(
-      'input[name="delivery"]:checked'
-    );
+        selectedLocker.innerHTML = `
+
+          <strong>
+            ✅ Wybrany Paczkomat:
+          </strong>
+
+          <br>
+
+          ${escapeHtml(name)}
+
+          ${
+            address
+              ? `<br>${escapeHtml(address)}`
+              : ""
+          }
+
+          ${
+            postCode || city
+              ? `<br>${escapeHtml(
+                  `${postCode} ${city}`.trim()
+                )}`
+              : ""
+          }
+
+        `;
 
 
-  if (!delivery) {
+        /*
+          Po wybraniu punktu chowamy mapę,
+          ale można ją ponownie otworzyć.
+        */
 
-    alert(
-      "Wybierz sposób dostawy."
-    );
+        inpostMapContainer.style.display =
+          "none";
 
-    return;
-  }
-
-
-  let deliveryData = null;
+      };
 
 
-  if (
-    delivery.value === "parcel"
-  ) {
+    /* =====================================================
+       BEZPIECZNE WSTAWIANIE TEKSTU
+       ===================================================== */
 
-    const code =
-      document
-        .getElementById("parcelCode")
-        .value
-        .trim();
+    function escapeHtml(value) {
 
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 
-    const address =
-      document
-        .getElementById("parcelAddress")
-        .value
-        .trim();
+    }
 
 
-    if (!code) {
+    /* =====================================================
+       INPOST — OTWARCIE MAPY
+       ===================================================== */
 
-      alert(
-        "Najpierw wybierz Paczkomat na mapie."
-      );
+    showInpostMap.addEventListener(
+      "click",
+      () => {
 
-      document
-        .getElementById("parcelFields")
-        .scrollIntoView({
+        /*
+          Jeżeli nie ma tokena,
+          nie próbujemy ładować mapy.
+        */
+
+        if (
+          INPOST_GEOWIDGET_TOKEN ===
+          "TU_WKLEJ_PUBLICZNY_TOKEN_GEOWIDGET"
+        ) {
+
+          inpostTokenWarning.style.display =
+            "block";
+
+          inpostMapContainer.style.display =
+            "none";
+
+          return;
+
+        }
+
+
+        inpostTokenWarning.style.display =
+          "none";
+
+
+        /*
+          Jeżeli mapa została już utworzona,
+          tylko ją pokazujemy.
+        */
+
+        const existingWidget =
+          document.getElementById(
+            "inpostMap"
+          );
+
+
+        if (existingWidget) {
+
+          inpostMapContainer.style.display =
+            "block";
+
+          inpostMapContainer.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
+          return;
+
+        }
+
+
+        /*
+          Tworzymy oficjalny element
+          Geowidgetu InPost.
+        */
+
+        const widget =
+          document.createElement(
+            "inpost-geowidget"
+          );
+
+
+        widget.id =
+          "inpostMap";
+
+
+        widget.setAttribute(
+          "token",
+          INPOST_GEOWIDGET_TOKEN
+        );
+
+
+        widget.setAttribute(
+          "language",
+          "pl"
+        );
+
+
+        widget.setAttribute(
+          "country",
+          "PL"
+        );
+
+
+        widget.setAttribute(
+          "config",
+          "parcelCollect"
+        );
+
+
+        widget.setAttribute(
+          "onpoint",
+          "afterPointSelected"
+        );
+
+
+        inpostMapContainer.innerHTML =
+          "";
+
+
+        inpostMapContainer.appendChild(
+          widget
+        );
+
+
+        inpostMapContainer.style.display =
+          "block";
+
+
+        inpostMapContainer.scrollIntoView({
           behavior: "smooth",
-          block: "center"
+          block: "start"
         });
 
-      return;
-    }
-
-
-    deliveryData = {
-
-      type:
-        "InPost Paczkomat",
-
-      parcelCode:
-        code,
-
-      parcelAddress:
-        address
-
-    };
-
-  } else {
-
-    const street =
-      document
-        .getElementById("street")
-        .value
-        .trim();
-
-
-    const house =
-      document
-        .getElementById("houseNumber")
-        .value
-        .trim();
-
-
-    const postal =
-      document
-        .getElementById("postalCode")
-        .value
-        .trim();
-
-
-    const city =
-      document
-        .getElementById("city")
-        .value
-        .trim();
-
-
-    if (
-      !street ||
-      !house ||
-      !postal ||
-      !city
-    ) {
-
-      alert(
-        "Uzupełnij cały adres dostawy."
-      );
-
-      return;
-    }
-
-
-    deliveryData = {
-
-      type:
-        "InPost Kurier",
-
-      street:
-        street,
-
-      houseNumber:
-        house,
-
-      postalCode:
-        postal,
-
-      city:
-        city
-
-    };
-
-  }
-
-
-  const payment =
-    document.querySelector(
-      'input[name="payment"]:checked'
+      }
     );
 
 
-  if (!payment) {
+    /* =====================================================
+       WALIDACJA FORMULARZA
+       ===================================================== */
 
-    alert(
-      "Wybierz metodę płatności."
-    );
+    function validateCheckout() {
 
-    return;
-  }
+      if (cart.length === 0) {
+
+        alert(
+          "Koszyk jest pusty."
+        );
+
+        return false;
+
+      }
 
 
-  const order = {
+      const name =
+        document.getElementById(
+          "customerName"
+        ).value.trim();
 
-    orderId:
-      "FZ-" +
-      Date.now(),
 
-    date:
-      new Date().toISOString(),
+      const email =
+        document.getElementById(
+          "customerEmail"
+        ).value.trim();
 
-    customer: {
 
-      name:
-        name,
+      if (!name) {
 
-      email:
-        email,
+        alert(
+          "Podaj imię i nazwisko."
+        );
 
-      phone:
-        phone
+        return false;
 
-    },
+      }
 
-    products:
-      cart.map(
-        function(item) {
 
-          const product =
-            products.find(
-              function(productItem) {
-                return productItem.id === item.id;
+      if (!email) {
+
+        alert(
+          "Podaj adres e-mail."
+        );
+
+        return false;
+
+      }
+
+
+      const delivery =
+        document.querySelector(
+          'input[name="delivery"]:checked'
+        );
+
+
+      if (!delivery) {
+
+        alert(
+          "Wybierz sposób dostawy."
+        );
+
+        return false;
+
+      }
+
+
+      /*
+        InPost wymaga wybranego Paczkomatu.
+      */
+
+      if (
+        delivery.value === "inpost"
+      ) {
+
+        if (!parcelLocker.value) {
+
+          alert(
+            "Wybierz Paczkomat InPost na mapie."
+          );
+
+          return false;
+
+        }
+
+      }
+
+
+      /*
+        Kurier wymaga adresu.
+      */
+
+      if (
+        delivery.value === "courier"
+      ) {
+
+        const street =
+          document.getElementById(
+            "street"
+          ).value.trim();
+
+
+        const house =
+          document.getElementById(
+            "house"
+          ).value.trim();
+
+
+        const postal =
+          document.getElementById(
+            "postal"
+          ).value.trim();
+
+
+        const city =
+          document.getElementById(
+            "city"
+          ).value.trim();
+
+
+        if (
+          !street ||
+          !house ||
+          !postal ||
+          !city
+        ) {
+
+          alert(
+            "Uzupełnij cały adres dostawy."
+          );
+
+          return false;
+
+        }
+
+      }
+
+
+      return true;
+
+    }
+
+
+    /* =====================================================
+       CHECKOUT / STRIPE
+       ===================================================== */
+
+    checkoutButton.addEventListener(
+      "click",
+      async () => {
+
+        if (!validateCheckout()) {
+          return;
+        }
+
+
+        checkoutButton.disabled =
+          true;
+
+
+        checkoutButton.textContent =
+          "Przygotowywanie płatności...";
+
+
+        try {
+
+          /*
+            Pobieramy dane klienta.
+          */
+
+          const customer = {
+
+            name:
+              document
+                .getElementById(
+                  "customerName"
+                )
+                .value
+                .trim(),
+
+            email:
+              document
+                .getElementById(
+                  "customerEmail"
+                )
+                .value
+                .trim()
+
+          };
+
+
+          /*
+            Sposób dostawy.
+          */
+
+          const deliveryType =
+            document.querySelector(
+              'input[name="delivery"]:checked'
+            ).value;
+
+
+          /*
+            Dane dostawy.
+          */
+
+          const delivery = {
+
+            type:
+              deliveryType,
+
+            parcelLocker:
+              parcelLocker.value,
+
+            parcelAddress:
+              parcelAddress.value,
+
+            street:
+              document
+                .getElementById(
+                  "street"
+                )
+                .value
+                .trim(),
+
+            house:
+              document
+                .getElementById(
+                  "house"
+                )
+                .value
+                .trim(),
+
+            postal:
+              document
+                .getElementById(
+                  "postal"
+                )
+                .value
+                .trim(),
+
+            city:
+              document
+                .getElementById(
+                  "city"
+                )
+                .value
+                .trim()
+
+          };
+
+
+          /*
+            Wybrana metoda płatności.
+
+            Uwaga:
+            Ostateczne dostępne metody płatności
+            są kontrolowane przez Stripe.
+          */
+
+          const payment =
+            document.querySelector(
+              'input[name="payment"]:checked'
+            ).value;
+
+
+          /*
+            Wysyłamy zamówienie do server.js.
+          */
+
+          const response =
+            await fetch(
+              "/api/create-checkout-session",
+              {
+
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body:
+                  JSON.stringify({
+
+                    cart,
+
+                    customer,
+
+                    delivery,
+
+                    payment
+
+                  })
+
               }
             );
 
 
-          return {
+          const data =
+            await response.json();
 
-            name:
-              product.name,
 
-            price:
-              product.price,
+          if (!response.ok) {
 
-            quantity:
-              item.qty
+            throw new Error(
+              data.error ||
+              "Nie udało się utworzyć płatności."
+            );
 
-          };
+          }
+
+
+          /*
+            server.js zwraca adres Stripe Checkout.
+          */
+
+          if (!data.url) {
+
+            throw new Error(
+              "Brak adresu płatności Stripe."
+            );
+
+          }
+
+
+          window.location.href =
+            data.url;
 
         }
-      ),
 
-    total:
-      getCartTotal()
-        .toFixed(2),
+        catch (error) {
 
-    delivery:
-      deliveryData,
-
-    payment:
-      payment.value,
-
-    status:
-      "oczekuje na płatność"
-
-  };
+          console.error(
+            error
+          );
 
 
-  saveJSON(
-    "fizmo3d_last_order",
-    order
-  );
+          alert(
+            error.message ||
+            "Wystąpił błąd podczas tworzenia płatności."
+          );
 
 
-  const result =
-    document.getElementById(
-      "paymentResult"
+          checkoutButton.disabled =
+            false;
+
+
+          checkoutButton.textContent =
+            "Przejdź do płatności";
+
+        }
+
+      }
     );
 
 
-  const paymentName =
-    payment.value === "blik"
-      ? "BLIK"
-      : "karta płatnicza";
+    /* =====================================================
+       OBSŁUGA POWROTU ZE STRIPE
+       ===================================================== */
 
-
-  result.innerHTML = `
-
-    <div class="notice">
-
-      <strong>
-        Zamówienie ${escapeHtml(order.orderId)}
-        zostało przygotowane.
-      </strong>
-
-      <br><br>
-
-      Kwota:
-      <strong>
-        ${formatPrice(order.total)}
-      </strong>
-
-      <br><br>
-
-      Dostawa:
-      ${escapeHtml(deliveryData.type)}
-
-      <br><br>
-
-      Płatność:
-      ${paymentName}
-
-      <br><br>
-
-      <strong>
-        Uwaga:
-      </strong>
-
-      Prawdziwa płatność BLIK/kartą
-      wymaga podłączenia operatora płatności.
-      Ten plik nie pobiera danych karty
-      ani kodu BLIK.
-
-    </div>
-
-  `;
-
-
-  result.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
-
-}
-
-
-/*
-==================================================
-FORMATOWANIE
-==================================================
-*/
-
-function formatPrice(value) {
-
-  const number =
-    Number(value);
-
-
-  if (!Number.isFinite(number)) {
-    return "0.00 zł";
-  }
-
-
-  return (
-    number.toFixed(2) +
-    " zł"
-  );
-
-}
-
-
-function escapeHtml(value) {
-
-  return String(value)
-
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
-
-
-/*
-==================================================
-PRZYCISKI
-==================================================
-*/
-
-document
-  .getElementById("cartButton")
-  .addEventListener(
-    "click",
-    function() {
-
-      if (
-        cartSection.classList.contains(
-          "open"
-        )
-      ) {
-
-        closeCart();
-
-      } else {
-
-        openCart();
-
-      }
-
-    }
-  );
-
-
-document
-  .getElementById("closeCartButton")
-  .addEventListener(
-    "click",
-    closeCart
-  );
-
-
-document
-  .getElementById("ownerButton")
-  .addEventListener(
-    "click",
-    ownerLogin
-  );
-
-
-document
-  .getElementById("logoutButton")
-  .addEventListener(
-    "click",
-    logoutOwner
-  );
-
-
-document
-  .getElementById("addProductButton")
-  .addEventListener(
-    "click",
-    addProduct
-  );
-
-
-document
-  .getElementById("saveEditButton")
-  .addEventListener(
-    "click",
-    saveEdit
-  );
-
-
-document
-  .getElementById("cancelEditButton")
-  .addEventListener(
-    "click",
-    closeEdit
-  );
-
-
-document
-  .getElementById("paymentButton")
-  .addEventListener(
-    "click",
-    startPayment
-  );
-
-
-/*
-==================================================
-RADIO DOSTAWY
-==================================================
-*/
-
-document
-  .querySelectorAll(
-    'input[name="delivery"]'
-  )
-  .forEach(
-    function(input) {
-
-      input.addEventListener(
-        "change",
-        changeDelivery
+    const urlParams =
+      new URLSearchParams(
+        window.location.search
       );
 
-    }
-  );
 
-
-/*
-==================================================
-RADIO PŁATNOŚCI
-==================================================
-*/
-
-document
-  .querySelectorAll(
-    'input[name="payment"]'
-  )
-  .forEach(
-    function(input) {
-
-      input.addEventListener(
-        "change",
-        changePayment
+    const paymentStatus =
+      urlParams.get(
+        "payment"
       );
 
-    }
-  );
-
-
-/*
-==================================================
-MODAL
-==================================================
-*/
-
-editModal.addEventListener(
-  "click",
-  function(event) {
 
     if (
-      event.target ===
-      editModal
+      paymentStatus ===
+      "success"
     ) {
 
-      closeEdit();
+      alert(
+        "Płatność została zakończona. Dziękujemy za zamówienie!"
+      );
+
+
+      localStorage.removeItem(
+        "fizmo3d_cart"
+      );
+
+
+      cart = [];
+
+
+      /*
+        Czyścimy parametr z adresu.
+      */
+
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
 
     }
 
-  }
-);
 
-</script>
+    if (
+      paymentStatus ===
+      "cancel"
+    ) {
+
+      alert(
+        "Płatność została anulowana."
+      );
+
+
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
+
+    }
+
+
+    /* =====================================================
+       START
+       ===================================================== */
+
+    renderProducts();
+
+    renderCart();
+
+    updateDeliveryUI();
+
+  </script>
 
 </body>
 </html>
-```
