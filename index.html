@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -5,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Fizmo3D — sklep z wydrukami 3D</title>
+
+  <!-- InPost Geowidget -->
+  <script src="https://geowidget.easypack24.net/js/sdk-for-javascript.js"></script>
 
   <style>
     * {
@@ -44,16 +48,12 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-
       background: #111;
       color: white;
-
       padding: 16px 25px;
-
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       gap: 15px;
     }
 
@@ -168,13 +168,10 @@
 
     .admin {
       display: none;
-
       background: white;
       border-radius: 15px;
-
       padding: 20px;
       margin-bottom: 25px;
-
       box-shadow: 0 4px 15px rgba(0,0,0,.08);
     }
 
@@ -203,12 +200,9 @@
     select {
       width: 100%;
       padding: 12px;
-
       margin: 6px 0 12px;
-
       border: 1px solid #ccc;
       border-radius: 8px;
-
       font-size: 15px;
       outline: none;
       background: white;
@@ -223,21 +217,12 @@
       max-width: 600px;
     }
 
-    /*
-      =========================
-      KOSZYK
-      =========================
-    */
-
     .cart {
       display: none;
-
       background: white;
       border-radius: 15px;
-
       padding: 20px;
       margin-top: 25px;
-
       box-shadow: 0 4px 15px rgba(0,0,0,.08);
     }
 
@@ -260,11 +245,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       gap: 15px;
-
       padding: 15px 0;
-
       border-bottom: 1px solid #ddd;
     }
 
@@ -303,10 +285,8 @@
       border-top: 2px solid #111;
       margin-top: 15px;
       padding-top: 15px;
-
       display: flex;
       justify-content: space-between;
-
       font-size: 20px;
       font-weight: bold;
     }
@@ -317,19 +297,11 @@
       color: #777;
     }
 
-    /*
-      =========================
-      CHECKOUT
-      =========================
-    */
-
     .checkout {
       background: white;
       border-radius: 15px;
-
       padding: 25px;
       margin-top: 25px;
-
       box-shadow: 0 4px 15px rgba(0,0,0,.06);
     }
 
@@ -345,18 +317,12 @@
     .payment-option {
       display: flex;
       align-items: center;
-
       gap: 10px;
-
       padding: 13px;
-
       border: 1px solid #ddd;
       border-radius: 10px;
-
       margin: 8px 0;
-
       cursor: pointer;
-
       transition: .15s;
     }
 
@@ -388,40 +354,35 @@
       margin-bottom: 8px;
     }
 
-    .map-placeholder {
+    /* PRAWDZIWA MAPA INPOST */
+    .inpost-map {
+      width: 100%;
+      min-height: 500px;
+      border: 1px solid #ddd;
       border-radius: 12px;
-
-      min-height: 250px;
-
-      background:
-        linear-gradient(
-          rgba(255,255,255,.8),
-          rgba(255,255,255,.8)
-        ),
-        repeating-linear-gradient(
-          45deg,
-          #ddd,
-          #ddd 10px,
-          #eee 10px,
-          #eee 20px
-        );
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      text-align: center;
-
-      padding: 20px;
+      overflow: hidden;
       margin-top: 12px;
+      background: #eee;
+    }
+
+    .selected-parcel {
+      display: none;
+      background: #d1e7dd;
+      border: 1px solid #a3cfbb;
+      color: #155724;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    .selected-parcel.active {
+      display: block;
     }
 
     .notice {
       background: #fff3cd;
       border: 1px solid #ffe69c;
-
       padding: 12px;
-
       border-radius: 8px;
       margin: 10px 0;
     }
@@ -429,9 +390,7 @@
     .success {
       background: #d1e7dd;
       border: 1px solid #a3cfbb;
-
       padding: 15px;
-
       border-radius: 10px;
       margin-top: 15px;
     }
@@ -453,30 +412,18 @@
       border-top: 1px solid #ccc;
       margin-top: 10px;
       padding-top: 12px;
-
       font-size: 20px;
       font-weight: bold;
     }
 
-    /*
-      =========================
-      MODAL
-      =========================
-    */
-
     .modal {
       display: none;
-
       position: fixed;
       inset: 0;
-
       background: rgba(0,0,0,.65);
-
       z-index: 2000;
-
       align-items: center;
       justify-content: center;
-
       padding: 20px;
     }
 
@@ -486,14 +433,10 @@
 
     .modal-content {
       background: white;
-
       width: 100%;
       max-width: 500px;
-
       padding: 25px;
-
       border-radius: 15px;
-
       max-height: 90vh;
       overflow-y: auto;
     }
@@ -528,7 +471,6 @@
     }
 
     @media (max-width: 650px) {
-
       header {
         flex-direction: column;
         align-items: stretch;
@@ -567,6 +509,10 @@
         flex-direction: column;
         gap: 5px;
       }
+
+      .inpost-map {
+        min-height: 450px;
+      }
     }
   </style>
 </head>
@@ -574,72 +520,43 @@
 <body>
 
 <header>
-
   <h1>Fizmo3D</h1>
 
   <div class="header-buttons">
-
-    <button
-      id="cartButton"
-      class="header-button"
-      type="button"
-    >
+    <button id="cartButton" class="header-button" type="button">
       🛒 Koszyk (<span id="cartCount">0</span>)
     </button>
 
-    <button
-      id="ownerButton"
-      class="header-button"
-      type="button"
-    >
+    <button id="ownerButton" class="header-button" type="button">
       Panel właściciela
     </button>
-
   </div>
-
 </header>
-
 
 <main>
 
-  <!-- HERO -->
-
   <section class="hero">
-
     <h2>Fizmo3D — wydruki 3D</h2>
-
     <p>
       Wybierz produkt, dodaj go do koszyka
       i przejdź do zamówienia.
     </p>
-
   </section>
-
-
-  <!-- PANEL WŁAŚCICIELA -->
 
   <section id="adminPanel" class="admin">
 
     <div class="admin-header">
-
       <div>
-
         <h2>Panel właściciela</h2>
 
         <div class="admin-status">
           ✓ Zalogowano jako właściciel
         </div>
-
       </div>
 
-      <button
-        id="logoutButton"
-        class="secondary"
-        type="button"
-      >
+      <button id="logoutButton" class="secondary" type="button">
         Wyloguj
       </button>
-
     </div>
 
     <hr>
@@ -683,11 +600,7 @@
       </button>
 
     </div>
-
   </section>
-
-
-  <!-- PRODUKTY -->
 
   <section>
 
@@ -695,20 +608,11 @@
       Produkty
     </h2>
 
-    <div
-      id="products"
-      class="products"
-    ></div>
+    <div id="products" class="products"></div>
 
   </section>
 
-
-  <!-- KOSZYK -->
-
-  <section
-    id="cartSection"
-    class="cart"
-  >
+  <section id="cartSection" class="cart">
 
     <div class="cart-header">
 
@@ -738,21 +642,11 @@
 
   </section>
 
-
-  <!-- FINALIZACJA -->
-
   <section class="checkout">
 
-    <h2>
-      Finalizacja zamówienia
-    </h2>
+    <h2>Finalizacja zamówienia</h2>
 
-
-    <!-- DANE KLIENTA -->
-
-    <h3>
-      Dane klienta
-    </h3>
+    <h3>Dane klienta</h3>
 
     <input
       id="customerName"
@@ -772,12 +666,7 @@
       placeholder="Numer telefonu"
     >
 
-
-    <!-- DOSTAWA -->
-
-    <h3>
-      Dostawa
-    </h3>
+    <h3>Dostawa</h3>
 
     <div class="delivery-box">
 
@@ -790,7 +679,6 @@
         >
 
         <span>
-
           <strong>
             Dostawa InPost – Paczkomat®
           </strong>
@@ -798,13 +686,11 @@
           <br>
 
           <span class="small">
-            Wybierz Paczkomat
+            Wybierz Paczkomat na mapie
           </span>
-
         </span>
 
       </label>
-
 
       <label class="delivery-option">
 
@@ -815,7 +701,6 @@
         >
 
         <span>
-
           <strong>
             Dostawa InPost – Kurier
           </strong>
@@ -825,11 +710,9 @@
           <span class="small">
             Dostawa pod wskazany adres
           </span>
-
         </span>
 
       </label>
-
 
       <!-- PACZKOMAT -->
 
@@ -840,44 +723,26 @@
         </div>
 
         <div class="notice">
+          Wybierz Paczkomat bezpośrednio na mapie InPost.
+        </div>
 
-          <strong>
-            InPost
-          </strong>
+        <div class="inpost-map">
 
-          <br>
-
-          Prawdziwa interaktywna mapa Paczkomatów
-          wymaga podłączenia publicznego tokenu
-          InPost Geowidget.
+          <inpost-geowidget
+            id="inpostGeoWidget"
+            token="TU_WKLEJ_TOKEN_INPOST"
+            language="pl"
+            config="parcelCollect"
+            onpointselected="onInPostPointSelected"
+          >
+          </inpost-geowidget>
 
         </div>
 
-        <div class="map-placeholder">
-
-          <div>
-
-            <strong>
-              Mapa Paczkomatów InPost
-            </strong>
-
-            <br><br>
-
-            Po podłączeniu Geowidget tutaj pojawi
-            się mapa wyboru Paczkomatu.
-
-            <br><br>
-
-            <button
-              id="inpostButton"
-              type="button"
-              class="primary"
-            >
-              Wybierz Paczkomat
-            </button>
-
-          </div>
-
+        <div
+          id="selectedParcel"
+          class="selected-parcel"
+        >
         </div>
 
         <label>
@@ -887,7 +752,8 @@
         <input
           id="parcelCode"
           type="text"
-          placeholder="Np. WAW01A"
+          placeholder="Wybierz Paczkomat z mapy"
+          readonly
         >
 
         <label>
@@ -898,10 +764,10 @@
           id="parcelAddress"
           type="text"
           placeholder="Adres Paczkomatu"
+          readonly
         >
 
       </div>
-
 
       <!-- KURIER -->
 
@@ -939,12 +805,7 @@
 
     </div>
 
-
-    <!-- PŁATNOŚĆ -->
-
-    <h3>
-      Płatność
-    </h3>
+    <h3>Płatność</h3>
 
     <div class="payment-box">
 
@@ -958,9 +819,7 @@
 
         <span>
 
-          <strong>
-            BLIK
-          </strong>
+          <strong>BLIK</strong>
 
           <br>
 
@@ -972,7 +831,6 @@
 
       </label>
 
-
       <label class="payment-option">
 
         <input
@@ -983,9 +841,7 @@
 
         <span>
 
-          <strong>
-            Karta płatnicza
-          </strong>
+          <strong>Karta płatnicza</strong>
 
           <br>
 
@@ -997,7 +853,6 @@
 
       </label>
 
-
       <div
         id="paymentInfo"
         class="notice"
@@ -1007,18 +862,12 @@
 
     </div>
 
-
-    <!-- PODSUMOWANIE -->
-
-    <h3>
-      Podsumowanie
-    </h3>
+    <h3>Podsumowanie</h3>
 
     <div
       id="orderSummary"
       class="order-summary"
     ></div>
-
 
     <button
       id="paymentButton"
@@ -1029,35 +878,25 @@
       Przejdź do bezpiecznej płatności
     </button>
 
-
     <div id="paymentResult"></div>
 
   </section>
 
 </main>
 
-
 <footer>
   Fizmo3D © 2026
 </footer>
 
-
 <!-- MODAL EDYCJI -->
 
-<div
-  id="editModal"
-  class="modal"
->
+<div id="editModal" class="modal">
 
   <div class="modal-content">
 
-    <h2>
-      Edytuj produkt
-    </h2>
+    <h2>Edytuj produkt</h2>
 
-    <label>
-      Nazwa produktu
-    </label>
+    <label>Nazwa produktu</label>
 
     <input
       id="editName"
@@ -1065,9 +904,7 @@
       placeholder="Nazwa"
     >
 
-    <label>
-      Cena
-    </label>
+    <label>Cena</label>
 
     <input
       id="editPrice"
@@ -1077,9 +914,7 @@
       placeholder="Cena"
     >
 
-    <label>
-      Link do zdjęcia
-    </label>
+    <label>Link do zdjęcia</label>
 
     <input
       id="editImage"
@@ -1111,11 +946,8 @@
 
 </div>
 
-
 <script>
-
 "use strict";
-
 
 /*
 ==================================================
@@ -1131,7 +963,7 @@ const PLACEHOLDER_IMAGE =
 
 /*
 ==================================================
-POMOCNICZE LOCAL STORAGE
+LOCAL STORAGE
 ==================================================
 */
 
@@ -1139,17 +971,13 @@ function loadJSON(key, fallback) {
 
   try {
 
-    const value =
-      localStorage.getItem(key);
+    const value = localStorage.getItem(key);
 
     if (!value) {
       return fallback;
     }
 
-    const parsed =
-      JSON.parse(value);
-
-    return parsed;
+    return JSON.parse(value);
 
   } catch (error) {
 
@@ -1218,7 +1046,7 @@ const editModal =
 
 /*
 ==================================================
-DANE PRODUKTÓW
+PRODUKTY
 ==================================================
 */
 
@@ -1293,7 +1121,6 @@ document.addEventListener(
     renderProducts();
     renderCart();
     updateCheckoutSummary();
-
     updateOwnerPanel();
 
   }
@@ -1344,7 +1171,11 @@ function ownerLogin() {
       "active"
     );
 
-    if (adminPanel.classList.contains("active")) {
+    if (
+      adminPanel.classList.contains(
+        "active"
+      )
+    ) {
 
       adminPanel.scrollIntoView({
         behavior: "smooth",
@@ -1406,7 +1237,6 @@ function logoutOwner() {
   );
 
   updateOwnerPanel();
-
   renderProducts();
 
 }
@@ -1589,26 +1419,12 @@ function renderProducts() {
       }
 
 
-      card.appendChild(
-        image
-      );
+      card.appendChild(image);
+      card.appendChild(title);
+      card.appendChild(price);
+      card.appendChild(buttons);
 
-      card.appendChild(
-        title
-      );
-
-      card.appendChild(
-        price
-      );
-
-      card.appendChild(
-        buttons
-      );
-
-
-      productsContainer.appendChild(
-        card
-      );
+      productsContainer.appendChild(card);
 
     }
   );
@@ -1679,7 +1495,7 @@ function addProduct() {
   }
 
 
-  const newProduct = {
+  products.push({
 
     id:
       Date.now() +
@@ -1699,30 +1515,15 @@ function addProduct() {
       image ||
       PLACEHOLDER_IMAGE
 
-  };
-
-
-  products.push(
-    newProduct
-  );
+  });
 
 
   saveProducts();
 
 
-  document
-    .getElementById("newName")
-    .value = "";
-
-
-  document
-    .getElementById("newPrice")
-    .value = "";
-
-
-  document
-    .getElementById("newImage")
-    .value = "";
+  document.getElementById("newName").value = "";
+  document.getElementById("newPrice").value = "";
+  document.getElementById("newImage").value = "";
 
 
   renderProducts();
@@ -1737,7 +1538,7 @@ function addProduct() {
 
 /*
 ==================================================
-USUWANIE PRODUKTU
+USUWANIE
 ==================================================
 */
 
@@ -1761,15 +1562,14 @@ function deleteProduct(id) {
   }
 
 
-  const confirmed =
-    confirm(
+  if (
+    !confirm(
       'Czy na pewno usunąć produkt "' +
       product.name +
       '"?'
-    );
+    )
+  ) {
 
-
-  if (!confirmed) {
     return;
   }
 
@@ -1781,11 +1581,6 @@ function deleteProduct(id) {
       }
     );
 
-
-  /*
-    Usuwamy też ten produkt z koszyka,
-    żeby nie zostały stare pozycje.
-  */
 
   cart =
     cart.filter(
@@ -1807,7 +1602,7 @@ function deleteProduct(id) {
 
 /*
 ==================================================
-EDYCJA PRODUKTU
+EDYCJA
 ==================================================
 */
 
@@ -1831,26 +1626,17 @@ function openEdit(id) {
   }
 
 
-  editingId =
-    id;
+  editingId = id;
 
 
-  document
-    .getElementById("editName")
-    .value =
-      product.name;
+  document.getElementById("editName").value =
+    product.name;
 
+  document.getElementById("editPrice").value =
+    product.price;
 
-  document
-    .getElementById("editPrice")
-    .value =
-      product.price;
-
-
-  document
-    .getElementById("editImage")
-    .value =
-      product.image || "";
+  document.getElementById("editImage").value =
+    product.image || "";
 
 
   editModal.classList.add(
@@ -1862,8 +1648,7 @@ function openEdit(id) {
 
 function closeEdit() {
 
-  editingId =
-    null;
+  editingId = null;
 
   editModal.classList.remove(
     "active"
@@ -1874,12 +1659,7 @@ function closeEdit() {
 
 function saveEdit() {
 
-  if (!isOwner()) {
-    return;
-  }
-
-
-  if (editingId === null) {
+  if (!isOwner() || editingId === null) {
     return;
   }
 
@@ -1945,15 +1725,12 @@ function saveEdit() {
   }
 
 
-  product.name =
-    name;
-
+  product.name = name;
 
   product.price =
     Number(
       price.toFixed(2)
     );
-
 
   product.image =
     image ||
@@ -1961,9 +1738,7 @@ function saveEdit() {
 
 
   saveProducts();
-
   renderProducts();
-
   closeEdit();
 
 }
@@ -2045,13 +1820,8 @@ function addToCart(id) {
   } else {
 
     cart.push({
-
-      id:
-        id,
-
-      qty:
-        1
-
+      id: id,
+      qty: 1
     });
 
   }
@@ -2060,14 +1830,7 @@ function addToCart(id) {
   saveCart();
 
   renderCart();
-
   updateCheckoutSummary();
-
-
-  /*
-    Koszyk NIE otwiera się automatycznie.
-    Produkt zostaje tylko dodany.
-  */
 
 }
 
@@ -2085,7 +1848,6 @@ function removeFromCart(id) {
   saveCart();
 
   renderCart();
-
   updateCheckoutSummary();
 
 }
@@ -2122,7 +1884,6 @@ function changeQty(id, amount) {
   saveCart();
 
   renderCart();
-
   updateCheckoutSummary();
 
 }
@@ -2186,10 +1947,8 @@ function renderCart() {
 
   cartContainer.innerHTML = "";
 
-
   const count =
     getCartCount();
-
 
   cartCount.textContent =
     count;
@@ -2261,13 +2020,8 @@ function renderCart() {
         " / szt.";
 
 
-      info.appendChild(
-        name
-      );
-
-      info.appendChild(
-        price
-      );
+      info.appendChild(name);
+      info.appendChild(price);
 
 
       const controls =
@@ -2289,17 +2043,10 @@ function renderCart() {
       minus.textContent =
         "−";
 
-      minus.addEventListener(
-        "click",
+      minus.onclick =
         function() {
-
-          changeQty(
-            item.id,
-            -1
-          );
-
-        }
-      );
+          changeQty(item.id, -1);
+        };
 
 
       const quantity =
@@ -2324,17 +2071,10 @@ function renderCart() {
       plus.textContent =
         "+";
 
-      plus.addEventListener(
-        "click",
+      plus.onclick =
         function() {
-
-          changeQty(
-            item.id,
-            1
-          );
-
-        }
-      );
+          changeQty(item.id, 1);
+        };
 
 
       const remove =
@@ -2349,47 +2089,23 @@ function renderCart() {
       remove.textContent =
         "Usuń";
 
-      remove.addEventListener(
-        "click",
+      remove.onclick =
         function() {
-
-          removeFromCart(
-            item.id
-          );
-
-        }
-      );
+          removeFromCart(item.id);
+        };
 
 
-      controls.appendChild(
-        minus
-      );
-
-      controls.appendChild(
-        quantity
-      );
-
-      controls.appendChild(
-        plus
-      );
-
-      controls.appendChild(
-        remove
-      );
+      controls.appendChild(minus);
+      controls.appendChild(quantity);
+      controls.appendChild(plus);
+      controls.appendChild(remove);
 
 
-      row.appendChild(
-        info
-      );
-
-      row.appendChild(
-        controls
-      );
+      row.appendChild(info);
+      row.appendChild(controls);
 
 
-      cartContainer.appendChild(
-        row
-      );
+      cartContainer.appendChild(row);
 
     }
   );
@@ -2405,7 +2121,7 @@ function renderCart() {
 
 /*
 ==================================================
-OTWIERANIE KOSZYKA
+KOSZYK — OTWIERANIE
 ==================================================
 */
 
@@ -2462,7 +2178,6 @@ function changeDelivery() {
     "active"
   );
 
-
   courierFields.classList.remove(
     "active"
   );
@@ -2501,15 +2216,101 @@ function changeDelivery() {
 
 /*
 ==================================================
-INPOST
+INPOST GEOWIDGET
 ==================================================
 */
 
-function openInPostSelection() {
+function onInPostPointSelected(point) {
 
-  alert(
-    "Prawdziwa mapa Paczkomatów InPost wymaga podłączenia publicznego tokenu Geowidget. Ten przycisk jest już przygotowany pod integrację."
+  console.log(
+    "Wybrany Paczkomat:",
+    point
   );
+
+
+  if (!point) {
+    return;
+  }
+
+
+  const codeInput =
+    document.getElementById(
+      "parcelCode"
+    );
+
+
+  const addressInput =
+    document.getElementById(
+      "parcelAddress"
+    );
+
+
+  const selectedParcel =
+    document.getElementById(
+      "selectedParcel"
+    );
+
+
+  const code =
+    point.name ||
+    point.code ||
+    point.id ||
+    "";
+
+
+  let address = "";
+
+
+  if (point.address) {
+
+    if (typeof point.address === "string") {
+
+      address =
+        point.address;
+
+    } else {
+
+      address =
+        [
+          point.address.line1,
+          point.address.line2,
+          point.address.street,
+          point.address.city
+        ]
+        .filter(Boolean)
+        .join(", ");
+
+    }
+
+  }
+
+
+  codeInput.value =
+    code;
+
+
+  addressInput.value =
+    address;
+
+
+  selectedParcel.innerHTML = `
+    <strong>✓ Wybrano Paczkomat</strong>
+    <br><br>
+    Kod:
+    <strong>${escapeHtml(code)}</strong>
+    ${address
+      ? `<br>Adres: ${escapeHtml(address)}`
+      : ""
+    }
+  `;
+
+
+  selectedParcel.classList.add(
+    "active"
+  );
+
+
+  updateCheckoutSummary();
 
 }
 
@@ -2792,8 +2593,7 @@ function startPayment() {
 
 
   if (
-    delivery.value ===
-    "parcel"
+    delivery.value === "parcel"
   ) {
 
     const code =
@@ -2813,8 +2613,15 @@ function startPayment() {
     if (!code) {
 
       alert(
-        "Podaj kod wybranego Paczkomatu."
+        "Najpierw wybierz Paczkomat na mapie."
       );
+
+      document
+        .getElementById("parcelFields")
+        .scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
 
       return;
     }
@@ -3005,7 +2812,7 @@ function startPayment() {
     <div class="notice">
 
       <strong>
-        Zamówienie ${order.orderId}
+        Zamówienie ${escapeHtml(order.orderId)}
         zostało przygotowane.
       </strong>
 
@@ -3019,9 +2826,7 @@ function startPayment() {
       <br><br>
 
       Dostawa:
-      ${escapeHtml(
-        deliveryData.type
-      )}
+      ${escapeHtml(deliveryData.type)}
 
       <br><br>
 
@@ -3054,7 +2859,7 @@ function startPayment() {
 
 /*
 ==================================================
-FORMATOWANIE CENY
+FORMATOWANIE
 ==================================================
 */
 
@@ -3065,9 +2870,7 @@ function formatPrice(value) {
 
 
   if (!Number.isFinite(number)) {
-
     return "0.00 zł";
-
   }
 
 
@@ -3079,40 +2882,15 @@ function formatPrice(value) {
 }
 
 
-/*
-==================================================
-ESCAPE HTML
-==================================================
-*/
-
 function escapeHtml(value) {
 
   return String(value)
 
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
 
@@ -3151,11 +2929,7 @@ document
   .getElementById("closeCartButton")
   .addEventListener(
     "click",
-    function() {
-
-      closeCart();
-
-    }
+    closeCart
   );
 
 
@@ -3163,11 +2937,7 @@ document
   .getElementById("ownerButton")
   .addEventListener(
     "click",
-    function() {
-
-      ownerLogin();
-
-    }
+    ownerLogin
   );
 
 
@@ -3175,11 +2945,7 @@ document
   .getElementById("logoutButton")
   .addEventListener(
     "click",
-    function() {
-
-      logoutOwner();
-
-    }
+    logoutOwner
   );
 
 
@@ -3187,11 +2953,7 @@ document
   .getElementById("addProductButton")
   .addEventListener(
     "click",
-    function() {
-
-      addProduct();
-
-    }
+    addProduct
   );
 
 
@@ -3199,11 +2961,7 @@ document
   .getElementById("saveEditButton")
   .addEventListener(
     "click",
-    function() {
-
-      saveEdit();
-
-    }
+    saveEdit
   );
 
 
@@ -3211,23 +2969,7 @@ document
   .getElementById("cancelEditButton")
   .addEventListener(
     "click",
-    function() {
-
-      closeEdit();
-
-    }
-  );
-
-
-document
-  .getElementById("inpostButton")
-  .addEventListener(
-    "click",
-    function() {
-
-      openInPostSelection();
-
-    }
+    closeEdit
   );
 
 
@@ -3235,11 +2977,7 @@ document
   .getElementById("paymentButton")
   .addEventListener(
     "click",
-    function() {
-
-      startPayment();
-
-    }
+    startPayment
   );
 
 
@@ -3289,7 +3027,7 @@ document
 
 /*
 ==================================================
-ZAMYKANIE MODALA KLIKNIĘCIEM W TŁO
+MODAL
 ==================================================
 */
 
@@ -3313,3 +3051,4 @@ editModal.addEventListener(
 
 </body>
 </html>
+```
